@@ -6,15 +6,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 @Data
-@JsonPropertyOrder({"IMEI","FIRMWARE","CONFIGUE","TIME"})
 @AllArgsConstructor
 @NoArgsConstructor
 public class DevicesFromApi {
 
-    private String IMEI;
-    private String FIRMWARE;
-    private String CONFIGUE;
-    private String TIME;
+    private String imei;
+    private String reference;
+    private String config;
+    private String lastSeen;
 
 
 }

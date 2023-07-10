@@ -17,7 +17,8 @@ public class DeviceController {
     private RestTemplate restTemplate;
     @GetMapping("/device")
     public List<Object>getObjects(){
-        String apiUrl = "https://api.thingspeak.com/channels/1053969/fields/1/last?api_key=TW9N2WQSI0AGG912";         Object[] objects= restTemplate.getForObject(apiUrl,Object[].class);
+        String apiUrl = "https://0da9-196-70-5-3.ngrok-free.app/devices";
+        Object[] objects= restTemplate.getForObject(apiUrl,Object[].class);
        return Arrays.asList(objects);
     }
 }
