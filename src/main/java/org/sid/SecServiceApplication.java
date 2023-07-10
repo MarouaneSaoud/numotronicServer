@@ -1,7 +1,8 @@
 package org.sid;
 
-import lombok.AllArgsConstructor;
+import org.sid.dao.DevicesFromApi;
 import org.sid.entities.AppRole;
+import org.sid.entities.Device;
 import org.sid.service.AccountService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,12 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 @SpringBootApplication
-@AllArgsConstructor
 public class SecServiceApplication {
 
     public static void main(String[] args) {
@@ -36,7 +37,6 @@ public class SecServiceApplication {
 
 
         };
-
 
     }
     @Bean
