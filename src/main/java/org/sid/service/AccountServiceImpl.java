@@ -1,8 +1,7 @@
 package org.sid.service;
 
-import org.apache.catalina.User;
-import org.sid.dao.AppRoleRepository;
-import org.sid.dao.AppUserRepository;
+import org.sid.repositories.AppRoleRepository;
+import org.sid.repositories.AppUserRepository;
 import org.sid.entities.AppRole;
 import org.sid.entities.AppUser;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
