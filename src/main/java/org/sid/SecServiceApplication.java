@@ -40,6 +40,7 @@ public class SecServiceApplication {
             });
             accountService.addRoleToUser("admin","ADMIN");
             accountService.addRoleToUser("user1","USER");
+
             RestTemplate restTemplate = new RestTemplate();
             String apiUrl="https://229e-41-141-238-134.ngrok-free.app/devices";
             ResponseEntity<LinkedHashMap[]> responseEntity = restTemplate.getForEntity(apiUrl, LinkedHashMap[].class);
