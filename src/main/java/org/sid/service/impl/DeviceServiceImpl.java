@@ -1,11 +1,11 @@
-package org.sid.service;
+package org.sid.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.sid.entities.Device;
-import org.sid.repositories.DeviceRepository;
+import org.sid.dao.entity.Device;
+import org.sid.dao.repository.DeviceRepository;
+import org.sid.service.DeviceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 @AllArgsConstructor

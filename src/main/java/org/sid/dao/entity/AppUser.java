@@ -1,4 +1,4 @@
-package org.sid.entities;
+package org.sid.dao.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -9,8 +9,12 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+
 @Entity
-@Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,5 +25,5 @@ public class AppUser {
     private String password;
     private boolean actived;
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<AppRole> roles=new ArrayList<>();
+    private Collection<AppRole> roles = new ArrayList<>();
 }

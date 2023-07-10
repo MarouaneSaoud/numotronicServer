@@ -1,9 +1,9 @@
-package org.sid.sec;
+package org.sid.config.security;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.sid.entities.AppUser;
+import org.sid.config.SecurityParams;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -50,7 +50,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withIssuer(request.getRequestURI())
                 .withSubject(user.getUsername())
                 .withArrayClaim("roles",roles.toArray(new String[roles.size()]))
-                .withExpiresAt(new Date(System.currentTimeMillis()+SecurityParams.EXPIRATION))
+                .withExpiresAt(new Date(System.currentTimeMillis()+ SecurityParams.EXPIRATION))
                 .sign(Algorithm.HMAC256(SecurityParams.SECRET));
 
         Map<String , String> idToken = new HashMap<>();

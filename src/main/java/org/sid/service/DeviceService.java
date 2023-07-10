@@ -1,6 +1,6 @@
 package org.sid.service;
 
-import org.sid.entities.Device;
+import org.sid.dao.entity.Device;
 
 import java.util.List;
 

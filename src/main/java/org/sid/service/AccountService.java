@@ -1,8 +1,7 @@
 package org.sid.service;
 
-import org.apache.catalina.User;
-import org.sid.entities.AppRole;
-import org.sid.entities.AppUser;
+import org.sid.dao.entity.AppRole;
+import org.sid.dao.entity.AppUser;
 
 import java.util.List;
 
