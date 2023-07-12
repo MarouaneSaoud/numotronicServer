@@ -7,6 +7,7 @@ import org.sid.dao.entity.AppUser;
 import org.sid.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -17,7 +18,7 @@ public class AuthController extends AbstractController {
     private final AccountService accountService;
 
 
-   /* @PostConstruct
+    @PostConstruct
     void init() {
         // Todo à supprimer
         accountService.saveUser("admin", "1234", "1234");
@@ -26,7 +27,7 @@ public class AuthController extends AbstractController {
         accountService.saveRole(new AppRole(null, "USER"));
         accountService.addRoleToUser("admin", "ADMIN");
         accountService.addRoleToUser("aya", "USER");
-    }*/
+    }
 
     @GetMapping("/")
     public List<AppUser> users() {
