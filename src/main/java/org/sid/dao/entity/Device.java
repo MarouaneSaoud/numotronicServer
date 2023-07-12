@@ -18,7 +18,7 @@ public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double imei;
+    private String imei;
     private Date Time;
     private String firmware;
     private String configuration;

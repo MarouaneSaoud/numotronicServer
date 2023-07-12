@@ -21,12 +21,12 @@ public class UserController extends AbstractController {
     @PostConstruct
     void init() {
         // Todo à supprimer
-        accountService.saveUser("admin", "1234", "1234");
-        accountService.saveUser("aya", "1234", "1234");
+        accountService.saveUser("admin@numotronic.ma", "1234", "1234");
+        accountService.saveUser("aya@numotronic.ma", "1234", "1234");
         accountService.saveRole(new AppRole(null, "ADMIN"));
         accountService.saveRole(new AppRole(null, "USER"));
-        accountService.addRoleToUser("admin", "ADMIN");
-        accountService.addRoleToUser("aya", "USER");
+        accountService.addRoleToUser("admin@numotronic.ma", "ADMIN");
+        accountService.addRoleToUser("aya@numotronic.ma", "USER");
     }
 
     @GetMapping("/")
