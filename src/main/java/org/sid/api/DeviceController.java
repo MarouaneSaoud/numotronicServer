@@ -1,6 +1,7 @@
 package org.sid.api;
 
 import lombok.RequiredArgsConstructor;
+import org.sid.service.DeviceService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import java.util.List;
 public class DeviceController extends AbstractController {
 
     private final RestTemplate restTemplate;
+
 
     @GetMapping("/device")
     public List<Object> getObjects() {

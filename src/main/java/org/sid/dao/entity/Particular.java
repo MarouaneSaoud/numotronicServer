@@ -5,16 +5,18 @@ import lombok.Setter;
 
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToOne;
 
 @MappedSuperclass
 @Getter
 @Setter
-public abstract class AbstractUtilisateur {
+
+public class Particular {
     @Id
-    private Long identifiant;
+    private String name;
+    private String altName;
+    private String cin;
+    private String address;
+    private int postalcode;
     private String email;
-    private String tel;
-    @OneToOne
-    private AppUser account;
+    private String country;
 }
