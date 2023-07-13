@@ -38,23 +38,9 @@ public class SecServiceApplication {
             });
             accountService.addRoleToUser("admin", "ADMIN");
             accountService.addRoleToUser("user1", "USER");
-*/
-           /* RestTemplate restTemplate = new RestTemplate();
-            String apiUrl = "https://api.thingspeak.com/channels/1053969/fields/1/last?api_key=TW9N2WQSI0AGG912";
-            ResponseEntity<LinkedHashMap[]> responseEntity = restTemplate.getForEntity(apiUrl, LinkedHashMap[].class);
-            LinkedHashMap[] usersArray = responseEntity.getBody();
+             */
 
-            List<DevicesFromDTO> deviceList = new ArrayList<>();
 
-            for (LinkedHashMap deviceMap : usersArray) {
-                DevicesFromDTO devices = new DevicesFromDTO();
-                devices.setImei((String) deviceMap.get("imei"));
-                devices.setConfig((String) deviceMap.get("reference"));
-                devices.setReference((String) deviceMap.get("config"));
-                devices.setLastSeen((String) deviceMap.get("lastSeen"));
-                deviceList.add(devices);
-            }
-            System.out.println(deviceList);*/
         };
 
     }
