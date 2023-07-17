@@ -16,9 +16,10 @@ public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private int serialNum;
     @Column(unique = true)
     @NotNull
-    private String imei;
+    private int imei;
     private String description;
     private Date createdAt;
     @ManyToOne

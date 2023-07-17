@@ -2,13 +2,17 @@ package org.sid.api;
 import lombok.RequiredArgsConstructor;
 import org.sid.dao.entity.Device;
 
+import org.sid.dao.entity.Reference;
+import org.sid.dto.DeviceToSave;
 import org.sid.dto.DeviceToSend;
 import org.sid.service.DeviceService;
+import org.sid.service.ReferenceService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @RestController
@@ -16,13 +20,18 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
+    private final ReferenceService referenceService;
+
+
+
+
     @GetMapping("/")
     public List<DeviceToSend> getdevice() {
         List<DeviceToSend> devicelist = deviceService.devicelist();
         return devicelist;
     }
     @PostMapping("/add")
-    public  Device save(@RequestBody Device device){
+    public  Device save(@RequestBody DeviceToSave device){
         Device d = deviceService.addDevice(device);
         return d;
     }

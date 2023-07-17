@@ -16,7 +16,8 @@ public class ReferenceServiceImpl implements ReferenceService {
 
     @Override
     public List<Reference> referencelist() {
-        return null;
+        List<Reference> referenceList = referenceRepository.findAll();
+        return referenceList;
     }
 
     @Override
@@ -28,6 +29,7 @@ public class ReferenceServiceImpl implements ReferenceService {
 
     @Override
     public void delete(Long id) {
+        referenceRepository.deleteById(id);
 
     }
 
