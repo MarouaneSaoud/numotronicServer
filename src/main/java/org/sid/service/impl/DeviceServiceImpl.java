@@ -3,6 +3,7 @@ package org.sid.service.impl;
 import lombok.AllArgsConstructor;
 import org.sid.dao.entity.Device;
 import org.sid.dao.repository.DeviceRepository;
+import org.sid.dto.DeviceToSend;
 import org.sid.dto.DevicesFromDTO;
 import org.sid.model.StatusDevice;
 import org.sid.service.DeviceService;
@@ -25,7 +26,7 @@ public class DeviceServiceImpl implements DeviceService {
     private DeviceRepository deviceRepository;
 
     @Override
-    public List<Device> devicelist() {
+    public List<DeviceToSend> devicelist() {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy-HH-mm");
@@ -46,9 +47,9 @@ public class DeviceServiceImpl implements DeviceService {
             devices.setLastSeen((String) deviceMap.get("lastSeen"));
             deviceListDTO.add(devices);
         }
-        List<Device> listDevices =  new ArrayList<>();
+        List<DeviceToSend> listDevices =  new ArrayList<>();
         for (DevicesFromDTO devices : deviceListDTO){
-            Device device= new Device();
+            DeviceToSend device= new DeviceToSend();
             device.setImei(devices.getIMEI());
             device.setTime(devices.getLastSeen());
             device.setFirmware(devices.getReference());
@@ -76,12 +77,17 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Device AddDevice(Device device) {
+    public Device addDevice(Device device) {
         return deviceRepository.save(device);
     }
 
     @Override
     public void delete(Long id) {
         deviceRepository.deleteById(id);
+    }
+
+    @Override
+    public Device findDeviceByImei(String imei) {
+        return deviceRepository.findDeviceByImei(imei);
     }
 }

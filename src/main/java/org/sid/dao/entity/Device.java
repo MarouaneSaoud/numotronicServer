@@ -3,9 +3,9 @@ package org.sid.dao.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.sid.model.StatusDevice;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Data
@@ -16,10 +16,12 @@ public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
+    @NotNull
     private String imei;
-    private String time;
-    @Enumerated(EnumType.STRING)
-    private StatusDevice statusDevice;
-    private String firmware;
-    private String configuration;
+    private String description;
+    private Date createdAt;
+    @ManyToOne
+    private Reference reference;
+
 }
