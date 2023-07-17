@@ -67,7 +67,6 @@ public class DeviceServiceImpl implements DeviceService {
                     device.setStatusDevice(StatusDevice.INACTIF);
                 }
             } catch (ParseException e) {
-                // Gérer l'erreur de parsing de la date
                 e.printStackTrace();
             }
             listDevices.add(device);
