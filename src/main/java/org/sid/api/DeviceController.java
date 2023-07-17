@@ -1,6 +1,7 @@
 package org.sid.api;
 import lombok.RequiredArgsConstructor;
 import org.sid.dao.entity.Device;
+
 import org.sid.dto.DeviceToSend;
 import org.sid.service.DeviceService;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
-
 
 @RestController
 @RequestMapping("/device")
@@ -24,7 +24,6 @@ public class DeviceController extends AbstractController {
     @PostMapping("/add")
     public  Device save(@RequestBody Device device){
         Device d = deviceService.addDevice(device);
-
         return d;
     }
 
