@@ -2,9 +2,13 @@ package org.sid.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.sid.dao.entity.Device;
+import org.sid.dao.entity.Reference;
 import org.sid.dao.repository.DeviceRepository;
+import org.sid.dao.repository.ReferenceRepository;
+import org.sid.dto.DeviceToSave;
 import org.sid.dto.DeviceToSend;
 import org.sid.dto.DevicesFromDTO;
+import org.sid.error.TechnicalException;
 import org.sid.model.StatusDevice;
 import org.sid.service.DeviceService;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,6 +28,7 @@ import java.util.*;
 public class DeviceServiceImpl implements DeviceService {
 
     private DeviceRepository deviceRepository;
+    private ReferenceRepository referenceRepository;
 
     @Override
     public List<DeviceToSend> devicelist() {
@@ -76,8 +81,24 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Device addDevice(Device device) {
+    public Device addDevice(DeviceToSave deviceToSave) {
+        Device device = new Device();
+        Reference reference = referenceRepository.findById(deviceToSave.getReference()).orElse(null) ;
+        if (reference!=null) {
+
+            device.setImei(deviceToSave.getImei());
+            device.setSerialNum(deviceToSave.getSerialnum());
+            device.setDescription(deviceToSave.getDescription());
+            device.setCreatedAt(new Date());
+            device.setReference(reference);
+
+        }
+        else {
+            throw new TechnicalException("reference null");
+        }
+
         return deviceRepository.save(device);
+
     }
 
     @Override

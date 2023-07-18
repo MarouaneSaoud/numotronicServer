@@ -29,7 +29,6 @@ public class ReferenceController{
     }
     @GetMapping("/{name}")
     public Reference findReferenceByName(@PathVariable String name){
-        Reference referenceByName = referenceService.findReferenceByName(name);
-        return referenceByName;
+        return referenceService.findReferenceByName(name);
     }
 }
