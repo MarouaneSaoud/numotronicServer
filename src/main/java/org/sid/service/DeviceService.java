@@ -9,5 +9,5 @@ public interface DeviceService {
     List<DeviceToSend> devicelist();
     public Device addDevice(Device device);
     public void delete(Long id);
-    public Device findDeviceByImei(String imei);
+    public Device findDeviceByImei(Integer imei);
 }

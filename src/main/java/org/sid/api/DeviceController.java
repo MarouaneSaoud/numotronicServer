@@ -17,7 +17,7 @@ import java.util.*;
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
     @GetMapping("/")
-    public List<DeviceToSend> getdevice() {
+    public List<DeviceToSend> getDevice() {
         List<DeviceToSend> devicelist = deviceService.devicelist();
         return devicelist;
     }
@@ -30,6 +30,10 @@ public class DeviceController extends AbstractController {
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id){
         deviceService.delete(id);
+    }
+    @GetMapping("/{imie}")
+    public Device findDeviceByImie(@PathVariable Integer imei){
+        return deviceService.findDeviceByImei(imei);
     }
 
 }

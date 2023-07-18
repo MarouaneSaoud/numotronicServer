@@ -22,8 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
-                .antMatchers( "/login","/device/**").permitAll()
-                .antMatchers("/users/**","/reference/**").hasAuthority("ADMIN")
+                .antMatchers( "/login").permitAll()
+                .antMatchers("/users/**","/reference/**","/device/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new JWTAuthorizationFiler(), UsernamePasswordAuthenticationFilter.class);
