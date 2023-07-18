@@ -16,23 +16,22 @@ public class ReferenceServiceImpl implements ReferenceService {
 
     @Override
     public List<Reference> referencelist() {
-        return null;
+        return referenceRepository.findAll();
     }
 
     @Override
     public Reference addReference(Reference reference) {
         Reference save = referenceRepository.save(reference);
-        System.out.println(reference);
         return save;
     }
 
     @Override
     public void delete(Long id) {
-
+        referenceRepository.deleteById(id);
     }
 
     @Override
     public Reference findReferenceByName(String name) {
-        return null;
+        return referenceRepository.findReferenceByName(name);
     }
 }

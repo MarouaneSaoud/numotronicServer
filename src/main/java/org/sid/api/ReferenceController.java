@@ -23,8 +23,13 @@ public class ReferenceController{
         Reference ref1 = referenceService.addReference(reference);
         return ref1;
     }
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id){
         referenceService.delete(id);
+    }
+    @GetMapping("/{name}")
+    public Reference findReferenceByName(@PathVariable String name){
+        Reference referenceByName = referenceService.findReferenceByName(name);
+        return referenceByName;
     }
 }
