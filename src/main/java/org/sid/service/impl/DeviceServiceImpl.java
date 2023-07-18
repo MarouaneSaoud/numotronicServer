@@ -107,7 +107,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Device findDeviceByImei(String imei) {
+    public Device findDeviceByImei(Integer imei) {
         return deviceRepository.findDeviceByImei(imei);
     }
 }

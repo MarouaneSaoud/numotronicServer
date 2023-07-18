@@ -27,4 +27,8 @@ public class ReferenceController{
     public void delete(@PathVariable Long id){
         referenceService.delete(id);
     }
+    @GetMapping("/{name}")
+    public Reference findReferenceByName(@PathVariable String name){
+        return referenceService.findReferenceByName(name);
+    }
 }

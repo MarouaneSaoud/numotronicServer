@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Long> {
-    Device findDeviceByImei(String imei);
+    Device findDeviceByImei(Integer imei);
 }
