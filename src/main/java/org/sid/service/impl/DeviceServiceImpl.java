@@ -46,8 +46,8 @@ public class DeviceServiceImpl implements DeviceService {
 
         for (Map<String, Object> deviceMap : devicesList) {
             DevicesFromDTO devices = new DevicesFromDTO();
-            devices.setIMEI((String) deviceMap.get("IMEI"));
-            devices.setReference((String) deviceMap.get("reference"));
+            devices.setIMEI((String) deviceMap.get("imei"));
+            devices.setReference((String) deviceMap.get("firware"));
             devices.setConfig((String) deviceMap.get("config"));
             devices.setLastSeen((String) deviceMap.get("lastSeen"));
             deviceListDTO.add(devices);
@@ -87,7 +87,7 @@ public class DeviceServiceImpl implements DeviceService {
         if (reference!=null) {
 
             device.setImei(deviceToSave.getImei());
-            device.setSerialNum(deviceToSave.getSerialnum());
+            device.setSerialNum(deviceToSave.getSerialNum());
             device.setDescription(deviceToSave.getDescription());
             device.setCreatedAt(new Date());
             device.setReference(reference);

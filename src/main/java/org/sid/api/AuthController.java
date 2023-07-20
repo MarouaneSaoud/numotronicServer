@@ -17,9 +17,7 @@ import java.util.List;
 public class AuthController extends AbstractController {
     private final AccountService accountService;
 
-/*
-
-  @PostConstruct
+/*  @PostConstruct
     void init() {
         // Todo à supprimer
         accountService.saveUser("admin@numotronic.com", "1234", "1234");
@@ -29,7 +27,8 @@ public class AuthController extends AbstractController {
         accountService.addRoleToUser("admin@numotronic.com", "ADMIN");
         accountService.addRoleToUser("aya@numotronic.com", "USER");
     }
-*/
+    */
+
 
     @GetMapping("/")
     public List<AppUser> users() {

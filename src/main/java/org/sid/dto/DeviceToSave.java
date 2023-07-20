@@ -10,7 +10,7 @@ import org.sid.dao.entity.Reference;
 @AllArgsConstructor
 public class DeviceToSave {
 
-    private int serialnum;
+    private int serialNum;
     private int imei;
     private String description;
     private Long reference;
