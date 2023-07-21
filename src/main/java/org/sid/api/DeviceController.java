@@ -2,9 +2,8 @@ package org.sid.api;
 import lombok.RequiredArgsConstructor;
 import org.sid.dao.entity.Device;
 
-import org.sid.dao.entity.Reference;
-import org.sid.dto.DeviceToSave;
-import org.sid.dto.DeviceToSend;
+import org.sid.dto.device.DeviceToSave;
+import org.sid.dto.device.DeviceToSend;
 import org.sid.service.DeviceService;
 import org.sid.service.ReferenceService;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 @RestController

@@ -1,8 +1,8 @@
 package org.sid.service;
 
 import org.sid.dao.entity.Device;
-import org.sid.dto.DeviceToSave;
-import org.sid.dto.DeviceToSend;
+import org.sid.dto.device.DeviceToSave;
+import org.sid.dto.device.DeviceToSend;
 
 import java.util.List;
 

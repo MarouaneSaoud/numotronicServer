@@ -1,4 +1,4 @@
-package org.sid.dto;
+package org.sid.dto.device;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
