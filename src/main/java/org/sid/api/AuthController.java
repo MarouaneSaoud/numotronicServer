@@ -41,7 +41,12 @@ public class AuthController extends AbstractController {
         return accountService.saveUser(
                 userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
     }
-
+    @PostMapping("/loadUsername")
+    public  AppUser loadUserByUserName(@RequestBody String userName){
+        System.out.println(userName);
+        System.out.println(accountService.loadUserByUsername(userName));
+        return accountService.loadUserByUsername(userName);
+    }
 
     @PostMapping("/addRoleToUser")
     public void AddRoleTo(@RequestBody RoleUserForm roleUserForm) {

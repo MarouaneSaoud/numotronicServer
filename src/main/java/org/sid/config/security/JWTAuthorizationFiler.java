@@ -33,6 +33,7 @@ public class JWTAuthorizationFiler extends OncePerRequestFilter {
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT= jwtVerifier.verify(jwt);
                 String username=decodedJWT.getSubject();
+
                 String[] roles = decodedJWT.getClaim("roles").asArray(String.class);
                 Collection<GrantedAuthority> authorities = new ArrayList<>();
                 for (String r : roles){

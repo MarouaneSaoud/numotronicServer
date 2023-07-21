@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface AccountService {
     List<AppUser> allUser();
-    public AppUser saveUser(String username,String password,String confirmedPassword);
-    public AppRole saveRole(AppRole role);
-    public AppUser loadUserByUsername(String username);
-    public void addRoleToUser(String username,String rolename);
+    AppUser saveUser(String username,String password,String confirmedPassword);
+    AppRole saveRole(AppRole role);
+    AppUser loadUserByUsername(String username);
+    void addRoleToUser(String username,String rolename);
 }
