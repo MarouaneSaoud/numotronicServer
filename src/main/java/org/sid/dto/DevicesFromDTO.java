@@ -13,7 +13,7 @@ import java.util.List;
 public class DevicesFromDTO {
 
     private String IMEI;
-    private String reference;
+    private String firware;
     private String config;
     private String lastSeen;
 
