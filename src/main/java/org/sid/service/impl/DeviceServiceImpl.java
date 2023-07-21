@@ -111,4 +111,9 @@ public class DeviceServiceImpl implements DeviceService {
     public Device findDeviceByImei(Integer imei) {
         return deviceRepository.findDeviceByImei(imei);
     }
+
+    @Override
+    public Long countDevices() {
+        return deviceRepository.count();
+    }
 }

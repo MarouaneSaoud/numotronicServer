@@ -40,9 +40,14 @@ public class DeviceController extends AbstractController {
     public void delete(@PathVariable Long id){
         deviceService.delete(id);
     }
+
     @GetMapping("/{imie}")
     public Device findDeviceByImie(@PathVariable Integer imei){
         return deviceService.findDeviceByImei(imei);
     }
 
+    @GetMapping("/count")
+    public Long countDevices (){
+       return deviceService.countDevices();
+    }
 }
