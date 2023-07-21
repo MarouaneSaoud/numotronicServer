@@ -63,7 +63,6 @@ public class DeviceServiceImpl implements DeviceService {
                 Date lastSeenDate = sdf.parse(devices.getLastSeen());
                 calendar.setTime(lastSeenDate);
                 calendar.add(Calendar.HOUR_OF_DAY, 6); // Ajouter 6 heures à la dernière date vue
-
                 if (currentDate.before(calendar.getTime())) {
                     device.setStatusDevice(StatusDevice.ONLINE);
                 } else if(currentDate.after(calendar.getTime()))  {
