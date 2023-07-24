@@ -1,18 +1,19 @@
 package org.sid.api;
 
-import lombok.Data;
+
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
+
 import org.sid.dao.entity.AppRole;
 import org.sid.dao.entity.AppUser;
+import org.sid.dto.user.FindUser;
 import org.sid.dto.user.RoleUserForm;
 import org.sid.dto.user.UserForm;
 import org.sid.error.BusinessException;
 import org.sid.service.AccountService;
-import org.springframework.http.MediaType;
+
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -47,9 +48,9 @@ public class AuthController extends AbstractController {
         return accountService.saveUser(
                 userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
     }
-    @PostMapping(value = "/loadUsername" , consumes = MediaType.APPLICATION_JSON_VALUE)
-    public  AppUser loadUserByUserName(@RequestBody User user){
-        AppUser appUser = accountService.loadUserByUsername(user.getUsername());
+    @PostMapping(value = "/loadUsername")
+    public  AppUser loadUserByUserName(@RequestBody FindUser user){
+        AppUser appUser = accountService.loadUserByUsername(user.getUserName());
          return Optional.ofNullable(appUser)
                 .orElseThrow(() -> new BusinessException("User not found"));
     }

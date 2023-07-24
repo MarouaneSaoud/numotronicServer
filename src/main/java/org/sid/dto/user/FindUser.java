@@ -3,6 +3,6 @@ package org.sid.dto.user;
 import lombok.Data;
 
 @Data
-class User {
+public class FindUser {
     private String userName;
 }
