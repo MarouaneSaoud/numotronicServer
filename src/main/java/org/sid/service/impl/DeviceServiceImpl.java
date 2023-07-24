@@ -38,7 +38,7 @@ public class DeviceServiceImpl implements DeviceService {
         Date currentDate = calendar.getTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
         RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = "https://api.thingspeak.com/channels/1053969/fields/1/last?api_key=TW9N2WQSI0AGG912";
+        String apiUrl = "https://gps-api-4beb.onrender.com/api/regrouped-data";
         ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
         Map<String, Object> responseBody = responseEntity.getBody();
 
@@ -48,7 +48,7 @@ public class DeviceServiceImpl implements DeviceService {
         for (Map<String, Object> deviceMap : devicesList) {
             DevicesFromDTO devices = new DevicesFromDTO();
             devices.setIMEI((String) deviceMap.get("imei"));
-            devices.setFirware((String) deviceMap.get("firware"));
+            devices.setFirware((String) deviceMap.get("firmware"));
             devices.setConfig((String) deviceMap.get("config"));
             devices.setLastSeen((String) deviceMap.get("lastSeen"));
             deviceListDTO.add(devices);
