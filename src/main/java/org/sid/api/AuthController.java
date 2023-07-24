@@ -51,8 +51,7 @@ public class AuthController extends AbstractController {
     @PostMapping(value = "/loadUsername")
     public  AppUser loadUserByUserName(@RequestBody FindUser user){
         AppUser appUser = accountService.loadUserByUsername(user.getUserName());
-         return Optional.ofNullable(appUser)
-                .orElseThrow(() -> new BusinessException("User not found"));
+        return Optional.ofNullable(appUser).orElseThrow(() -> new BusinessException("User not found"));
     }
 
     @PostMapping("/addRoleToUser")
