@@ -37,7 +37,6 @@ public class DeviceServiceImpl implements DeviceService {
         Calendar calendar = Calendar.getInstance();
         Date currentDate = calendar.getTime();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
-
         RestTemplate restTemplate = new RestTemplate();
         String apiUrl = "https://api.thingspeak.com/channels/1053969/fields/1/last?api_key=TW9N2WQSI0AGG912";
         ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
