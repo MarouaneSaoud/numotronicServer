@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers( "/login").permitAll()
-                .antMatchers("/users/**","/reference/**","/device/**").hasAnyAuthority("ADMIN","USER")
+                .antMatchers("/users/**","/reference/**","/device/**").hasAnyAuthority("ADMIN","SUPER_ADMIN","MANAGER")
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new JWTAuthorizationFiler(), UsernamePasswordAuthenticationFilter.class);

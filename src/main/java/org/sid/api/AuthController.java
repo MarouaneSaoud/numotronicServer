@@ -14,6 +14,7 @@ import org.sid.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,17 +25,19 @@ import java.util.Optional;
 public class AuthController extends AbstractController {
     private final AccountService accountService;
 
-/*  @PostConstruct
+    /*@PostConstruct
     void init() {
-        // Todo à supprimer
-        accountService.saveUser("admin@numotronic.com", "1234", "1234");
-        accountService.saveUser("aya@numotronic.com", "1234", "1234");
+        accountService.saveUser("admin@numotronic.com", "admin", "1234", "1234");
+        accountService.saveUser("aya@numotronic.com", "aya", "1234", "1234");
+        accountService.saveUser("manager@numotronic.com", "manager", "1234", "1234");
+        accountService.saveRole(new AppRole(null, "SUPER_ADMIN"));
         accountService.saveRole(new AppRole(null, "ADMIN"));
-        accountService.saveRole(new AppRole(null, "USER"));
-        accountService.addRoleToUser("admin@numotronic.com", "ADMIN");
-        accountService.addRoleToUser("aya@numotronic.com", "USER");
+        accountService.saveRole(new AppRole(null, "MANAGER"));
+        accountService.addRoleToUser("admin@numotronic.com", "SUPER_ADMIN");
+        accountService.addRoleToUser("aya@numotronic.com", "ADMIN");
+        accountService.addRoleToUser("manager@numotronic.com", "MANAGER");
     }
-    */
+*/
 
 
     @GetMapping("/")
@@ -46,7 +49,7 @@ public class AuthController extends AbstractController {
     @PostMapping("/register")
     public AppUser register(@RequestBody UserForm userForm) {
         return accountService.saveUser(
-                userForm.getUsername(), userForm.getPassword(), userForm.getConfirmedPassword());
+                userForm.getUsername(),userForm.getName(), userForm.getPassword(), userForm.getConfirmedPassword());
     }
     @PostMapping(value = "/loadUsername")
     public  AppUser loadUserByUserName(@RequestBody FindUser user){
