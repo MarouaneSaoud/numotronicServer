@@ -10,7 +10,7 @@ import org.sid.model.StatusDevice;
 @ToString
 public class DeviceToSend {
 
-
+    private Long id;
     private String imei;
     private String time;
     private StatusDevice statusDevice;

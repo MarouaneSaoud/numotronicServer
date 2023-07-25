@@ -1,9 +1,11 @@
 package org.sid.dao.entity;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -29,13 +31,14 @@ public class Company {
     private int cnss ;
     private String country;
     private String logo;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne
     private AppUser account;
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-    private List<Client> clients;
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-    private List<DeviceGroup> deviceGroups;
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
-    private List<Device> devices;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Client> clients;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER )
+    private Set<DeviceGroup> deviceGroups;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Device> devices;
 
 }

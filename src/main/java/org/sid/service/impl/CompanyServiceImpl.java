@@ -7,7 +7,9 @@ import org.sid.dao.entity.Device;
 import org.sid.dao.entity.DeviceGroup;
 import org.sid.dao.repository.CompanyRepository;
 import org.sid.dto.company.CompanyToSave;
+import org.sid.dto.user.FindUser;
 import org.sid.error.TechnicalException;
+import org.sid.service.AccountService;
 import org.sid.service.CompanyService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,21 +17,19 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
+    private final AccountService accountService;
 
     @Override
     public List<Company> company_list() {
         return companyRepository.findAll();
     }
-
     @Override
     public Company addCompany(CompanyToSave companyToSave) {
         Company company=new Company();
@@ -50,9 +50,16 @@ public class CompanyServiceImpl implements CompanyService {
             company.setCnss(companyToSave.getCnss());
             company.setCountry(companyToSave.getCountry());
             company.setLogo(companyToSave.getLogo());
-            company.setDevices(new ArrayList<>());
-            company.setDeviceGroups(new ArrayList<>());
-            company.setClients(new ArrayList<>());
+            company.setDevices(new HashSet<>());
+            company.setDeviceGroups(new HashSet<>());
+            company.setClients(new HashSet<>());
+
+            String mdp = generateRandomPassword(8);
+            System.out.println(mdp);
+            AppUser appUser = accountService.saveUser(company.getEmail(), company.getName(), mdp, mdp);
+            accountService.addRoleToUser(appUser.getUsername(),"MANAGER");
+
+            company.setAccount(appUser);
 
         return companyRepository.save(company);
         }
@@ -78,20 +85,29 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company getCompanyForLoggedInUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getPrincipal() instanceof AppUser) {
-            AppUser loggedInUser = (AppUser) authentication.getPrincipal();
-            String loggedInUserEmail = loggedInUser.getUsername();
-            Company company = companyRepository.findByAccount_Username(loggedInUserEmail);
+    public Company getCompanyForLoggedInUser(String email) {
+            Company company = companyRepository.findByAccount_Username(email);
             return company;
-        }
-        return null;
-
     }
 
     @Override
     public Company getCompanyById(String id) {
         return companyRepository.findById(id).orElse(null);
     }
+
+
+
+    public static String generateRandomPassword(int length) {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder password = new StringBuilder();
+
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            password.append(characters.charAt(index));
+        }
+
+        return password.toString();
+    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @RestController
@@ -18,11 +19,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
-    private final ReferenceService referenceService;
-
-
-
-
+    @PostConstruct
+    void init(){
+    }
     @GetMapping("/")
     public List<DeviceToSend> getDevice() {
         List<DeviceToSend> devicelist = deviceService.devicelist();
@@ -31,7 +30,6 @@ public class DeviceController extends AbstractController {
     @PostMapping("/add")
     public  Device save(@RequestBody DeviceToSave device){
         Device d = deviceService.addDevice(device);
-
         return d;
     }
 

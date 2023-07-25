@@ -55,22 +55,25 @@ public class DeviceServiceImpl implements DeviceService {
         }
         List<DeviceToSend> listDevices =  new ArrayList<>();
         for (DevicesFromDTO devices : deviceListDTO){
-            DeviceToSend device= new DeviceToSend();
-            device.setImei(devices.getIMEI());
-            device.setTime(devices.getLastSeen());
-            device.setFirmware(devices.getFirware());
-            device.setConfiguration(devices.getConfig());
-            try {
-                LocalDateTime lastSeenDateTime = LocalDateTime.parse(devices.getLastSeen(), formatter);
-                LocalDateTime currentDateTime = LocalDateTime.now();
+                DeviceToSend device= new DeviceToSend();
+                if (deviceRepository.findDeviceByImei(Integer.parseInt(devices.getIMEI()))==null){
+                device.setId(device.getId());
+                device.setImei(devices.getIMEI());
+                device.setTime(devices.getLastSeen());
+                device.setFirmware(devices.getFirware());
+                device.setConfiguration(devices.getConfig());
+                try {
+                    LocalDateTime lastSeenDateTime = LocalDateTime.parse(devices.getLastSeen(), formatter);
+                    LocalDateTime currentDateTime = LocalDateTime.now();
 
-                if (ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime) <= 6) {
-                    device.setStatusDevice(StatusDevice.ONLINE);
-                } else if (ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime) >= 6){
-                    device.setStatusDevice(StatusDevice.OFFLINE);
+                    if (ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime) <= 6) {
+                        device.setStatusDevice(StatusDevice.ONLINE);
+                    } else if (ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime) >= 6){
+                        device.setStatusDevice(StatusDevice.OFFLINE);
+                    }
+                } catch (DateTimeParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (DateTimeParseException e) {
-                e.printStackTrace();
             }
             listDevices.add(device);
         }

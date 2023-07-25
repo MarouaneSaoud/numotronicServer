@@ -19,22 +19,6 @@ public class SecServiceApplication {
         SpringApplication.run(SecServiceApplication.class, args);
     }
     @Bean
-    CommandLineRunner start(AccountService accountService) {
-        return args -> {
-            /*accountService.saveRole(new AppRole(null, "USER"));
-            accountService.saveRole(new AppRole(null, "ADMIN"));
-            Stream.of("user1", "user2", "user3", "admin").forEach(un -> {
-                accountService.saveUser(un, "1234", "1234");
-            });
-            accountService.addRoleToUser("admin", "ADMIN");
-            accountService.addRoleToUser("user1", "USER");
-             */
-
-
-        };
-
-    }
-    @Bean
     BCryptPasswordEncoder getBCPE(){
         return new BCryptPasswordEncoder();
     }
