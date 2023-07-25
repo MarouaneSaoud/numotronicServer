@@ -24,5 +24,11 @@ public class Device {
     private Date createdAt;
     @ManyToOne
     private Reference reference;
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "company_id")
+    private Company company;
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "device_group_id")
+    private DeviceGroup deviceGroup;
 
 }

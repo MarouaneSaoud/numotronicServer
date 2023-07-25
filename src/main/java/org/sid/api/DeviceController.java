@@ -31,6 +31,7 @@ public class DeviceController extends AbstractController {
     @PostMapping("/add")
     public  Device save(@RequestBody DeviceToSave device){
         Device d = deviceService.addDevice(device);
+
         return d;
     }
 
