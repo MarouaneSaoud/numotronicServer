@@ -19,10 +19,10 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
-    @PostConstruct
+  /*  @PostConstruct
     void init(){
         deviceService.addDevice(new DeviceToSave(319528549,319528549,"grs", 1L));
-    }
+    }*/
     @GetMapping("/")
     public List<DeviceToSend> getDevice() {
         List<DeviceToSend> devicelist = deviceService.devicelist();
