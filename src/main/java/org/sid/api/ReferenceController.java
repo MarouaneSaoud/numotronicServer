@@ -5,6 +5,7 @@ import org.sid.dao.entity.Reference;
 import org.sid.service.ReferenceService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -12,7 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ReferenceController{
     private final ReferenceService referenceService;
-
+   /* @PostConstruct
+    void init(){
+        referenceService.addReference(new Reference(null,"test", null));
+    }*/
     @GetMapping("/")
     public List<Reference> refferencelist(){
         List<Reference> ref = referenceService.referencelist();

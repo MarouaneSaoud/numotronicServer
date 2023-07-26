@@ -55,9 +55,11 @@ public class DeviceServiceImpl implements DeviceService {
         }
         List<DeviceToSend> listDevices =  new ArrayList<>();
         for (DevicesFromDTO devices : deviceListDTO){
-                DeviceToSend device= new DeviceToSend();
-                if (deviceRepository.findDeviceByImei(Integer.parseInt(devices.getIMEI()))==null){
-                device.setId(device.getId());
+
+                Device deviceByImei=deviceRepository.findDeviceByImei(Integer.parseInt(devices.getIMEI()));
+                if (deviceByImei!=null){
+                    DeviceToSend device= new DeviceToSend();
+                device.setId(deviceByImei.getId());
                 device.setImei(devices.getIMEI());
                 device.setTime(devices.getLastSeen());
                 device.setFirmware(devices.getFirware());
@@ -74,8 +76,9 @@ public class DeviceServiceImpl implements DeviceService {
                 } catch (DateTimeParseException e) {
                     e.printStackTrace();
                 }
+                listDevices.add(device);
             }
-            listDevices.add(device);
+
         }
 
         return listDevices;

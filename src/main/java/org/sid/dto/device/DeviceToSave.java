@@ -9,7 +9,6 @@ import org.sid.dao.entity.Reference;
 @Setter
 @AllArgsConstructor
 public class DeviceToSave {
-
     private int serialNum;
     private int imei;
     private String description;
