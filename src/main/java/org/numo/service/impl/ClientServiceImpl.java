@@ -1,0 +1,68 @@
+package org.numo.service.impl;
+
+import lombok.RequiredArgsConstructor;
+import org.numo.dao.entity.AppUser;
+import org.numo.dao.entity.Client;
+import org.numo.dao.entity.Company;
+import org.numo.dao.repository.ClientRepository;
+import org.numo.dto.client.ClientToSave;
+import org.numo.error.TechnicalException;
+import org.numo.functions.GenerateRandomPassword;
+import org.numo.service.AccountService;
+import org.numo.service.ClientService;
+import org.numo.service.CompanyService;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class ClientServiceImpl implements ClientService {
+    private final ClientRepository clientRepository;
+    private final CompanyService companyService;
+    private final AccountService accountService;
+
+    @Override
+    public List<Client> clientList() {
+        List<Client> all = clientRepository.findAll();
+        return all;
+    }
+
+    @Override
+    public Client addClient(ClientToSave clientToSave) {
+        Client client = new Client();
+        try {
+            Company company = companyService.getCompanyById(clientToSave.getCompanyId());
+            if (company!=null) {
+                client.setId(UUID.randomUUID().toString());
+                client.setName(clientToSave.getName());
+                client.setAddress(clientToSave.getAddress());
+                client.setPostalCode(clientToSave.getPostalCode());
+                client.setEmail(clientToSave.getEmail());
+                client.setCin(clientToSave.getCin());
+                client.setCompany(company);
+
+                GenerateRandomPassword grp = new GenerateRandomPassword();
+                String mdp = grp.generateRandomPassword(8);
+                AppUser appUser = accountService.saveUser(clientToSave.getEmail(), clientToSave.getName(), mdp, mdp);
+                accountService.addRoleToUser(appUser.getUsername(), "CLIENT");
+                client.setAccount(appUser);
+
+                Client saved = clientRepository.save(client);
+                return saved;
+            }else {
+                return null;
+            }
+        } catch (TechnicalException t){
+                throw new TechnicalException("ERROR");
+        }
+    }
+
+    @Override
+    public void deleteClient(String id) {
+        clientRepository.deleteById(id);
+    }
+}

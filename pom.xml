@@ -8,8 +8,8 @@
         <version>2.1.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.sid</groupId>
-    <artifactId>sec-service</artifactId>
+    <groupId>org.numo</groupId>
+    <artifactId>numotronic</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>numotronic-backend</name>
     <description>project for Spring Boot</description>
