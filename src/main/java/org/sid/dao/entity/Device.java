@@ -3,6 +3,7 @@ package org.sid.dao.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,7 @@ public class Device {
     @NotNull
     private int imei;
     private String description;
+    @CreationTimestamp
     private Date createdAt;
     @ManyToOne
     private Reference reference;

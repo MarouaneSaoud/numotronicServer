@@ -11,7 +11,7 @@ import org.sid.model.StatusDevice;
 public class DeviceToSend {
 
     private Long id;
-    private String imei;
+    private Integer imei;
     private String time;
     private StatusDevice statusDevice;
     private String firmware;

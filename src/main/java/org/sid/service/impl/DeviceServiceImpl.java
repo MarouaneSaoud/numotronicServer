@@ -5,18 +5,18 @@ import org.sid.dao.entity.Device;
 import org.sid.dao.entity.Reference;
 import org.sid.dao.repository.DeviceRepository;
 import org.sid.dao.repository.ReferenceRepository;
+import org.sid.dto.device.DeviceDto;
 import org.sid.dto.device.DeviceToSave;
 import org.sid.dto.device.DeviceToSend;
-import org.sid.dto.device.DevicesFromDTO;
+import org.sid.dto.device.DevicesFromAPI;
 import org.sid.error.TechnicalException;
+import org.sid.function.GetDevice;
+import org.sid.function.impl.GetDeviceFromApi;
+import org.sid.mapper.DeviceMapper;
 import org.sid.model.StatusDevice;
 import org.sid.service.DeviceService;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,38 +29,24 @@ import java.util.*;
 @Transactional
 public class DeviceServiceImpl implements DeviceService {
 
-    private DeviceRepository deviceRepository;
-    private ReferenceRepository referenceRepository;
+    private final DeviceRepository deviceRepository;
+    private final ReferenceRepository referenceRepository;
+
 
     @Override
     public List<DeviceToSend> devicelist() {
-        Calendar calendar = Calendar.getInstance();
-        Date currentDate = calendar.getTime();
+         GetDevice getDevice= new GetDeviceFromApi();
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
-        RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = "https://gps-api-4beb.onrender.com/api/regrouped-data";
-        ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
-        Map<String, Object> responseBody = responseEntity.getBody();
-
-        List<Map<String, Object>> devicesList = (List<Map<String, Object>>) responseBody.get("devices");
-        List<DevicesFromDTO> deviceListDTO = new ArrayList<>();
-
-        for (Map<String, Object> deviceMap : devicesList) {
-            DevicesFromDTO devices = new DevicesFromDTO();
-            devices.setIMEI((String) deviceMap.get("imei"));
-            devices.setFirware((String) deviceMap.get("firmware"));
-            devices.setConfig((String) deviceMap.get("config"));
-            devices.setLastSeen((String) deviceMap.get("lastSeen"));
-            deviceListDTO.add(devices);
-        }
+        List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices();
         List<DeviceToSend> listDevices =  new ArrayList<>();
-        for (DevicesFromDTO devices : deviceListDTO){
+        for (DevicesFromAPI devices : devicesFromAPI){
 
                 Device deviceByImei=deviceRepository.findDeviceByImei(Integer.parseInt(devices.getIMEI()));
                 if (deviceByImei!=null){
                     DeviceToSend device= new DeviceToSend();
                 device.setId(deviceByImei.getId());
-                device.setImei(devices.getIMEI());
+                device.setImei(Integer.parseInt(devices.getIMEI()));
                 device.setTime(devices.getLastSeen());
                 device.setFirmware(devices.getFirware());
                 device.setConfiguration(devices.getConfig());
@@ -89,18 +75,15 @@ public class DeviceServiceImpl implements DeviceService {
         Device device = new Device();
         Reference reference = referenceRepository.findById(deviceToSave.getReference()).orElse(null) ;
         if (reference!=null) {
-
             device.setImei(deviceToSave.getImei());
             device.setSerialNum(deviceToSave.getSerialNum());
             device.setDescription(deviceToSave.getDescription());
-            device.setCreatedAt(new Date());
             device.setReference(reference);
 
         }
         else {
             throw new TechnicalException("reference null");
         }
-
         return deviceRepository.save(device);
 
     }
@@ -111,8 +94,11 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Device findDeviceByImei(Integer imei) {
-        return deviceRepository.findDeviceByImei(imei);
+    public DeviceDto findDeviceByImei(Integer imei) {
+        Device device = deviceRepository.findDeviceByImei(imei);
+        DeviceDto deviceDto = DeviceMapper.INSTANCE.deviceToDeviceDto(device);
+        System.out.println(imei);
+        return deviceDto ;
     }
 
     @Override

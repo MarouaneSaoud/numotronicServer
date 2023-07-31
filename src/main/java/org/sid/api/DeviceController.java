@@ -1,7 +1,9 @@
 package org.sid.api;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.sid.dao.entity.Device;
 
+import org.sid.dto.device.DeviceDto;
 import org.sid.dto.device.DeviceToSave;
 import org.sid.dto.device.DeviceToSend;
 import org.sid.service.DeviceService;
@@ -16,6 +18,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/device")
+@Api(tags = "Device", description = "Endpoints to manage devices")
 @RequiredArgsConstructor
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
@@ -39,9 +42,9 @@ public class DeviceController extends AbstractController {
         deviceService.delete(id);
     }
 
-    @GetMapping("/{imie}")
-    public Device findDeviceByImie(@PathVariable Integer imei){
-        return deviceService.findDeviceByImei(imei);
+    @GetMapping("/{imei}")
+    public DeviceDto findDeviceByImie(@PathVariable int imei){
+        return deviceService.findDeviceByImei(319528549);
     }
 
     @GetMapping("/count")

@@ -1,6 +1,8 @@
 package org.sid.api;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
+import org.sid.dao.entity.Client;
 import org.sid.dao.entity.Company;
 import org.sid.dao.entity.Device;
 import org.sid.dao.entity.DeviceGroup;
@@ -15,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
+@Api(tags = "company", description = "Endpoints to manage companies")
+
 public class CompanyController {
     private final CompanyService companyService;
    /* @PostConstruct
@@ -42,19 +46,48 @@ public class CompanyController {
     
     @GetMapping("/device/{id}")
     public List<Device> devices(@PathVariable String id){
-        Company companyById = companyService.getCompanyById(id);
-        List<Device> devicesByCompany = companyService.findDevicesByCompany(companyById);
+        Company company = companyService.getCompanyById(id);
+        List<Device> devicesByCompany = companyService.findDevicesByCompany(company);
         return devicesByCompany;
     }
     
     @GetMapping("/groupDevice/{id}")
     public List<DeviceGroup> deviceGroups(@PathVariable String  id){
-        Company companyById = companyService.getCompanyById(id);
-        List<DeviceGroup> deviceGroups = companyService.findDeviceGroupsByCompany(companyById);
+        Company company = companyService.getCompanyById(id);
+        List<DeviceGroup> deviceGroups = companyService.findDeviceGroupsByCompany(company);
         return deviceGroups;
+    }
+    @GetMapping("/client/{id}")
+    public List<Client> clients(@PathVariable String  id){
+        Company company = companyService.getCompanyById(id);
+        List<Client> clientsByCompany = companyService.findClientsByCompany(company);
+        return clientsByCompany ;
     }
     @GetMapping ("/connected/{email}")
     public Company company(@PathVariable String email){
         return companyService.getCompanyForLoggedInUser(email);
+    }
+    @GetMapping("/device/count/{id}")
+    public Long countDevices(@PathVariable String id){
+        Company company = companyService.getCompanyById(id);
+        long devicesByCompany = companyService.countDevicesByCompany(company);
+        return devicesByCompany;
+    }
+    @GetMapping("/group/count/{id}")
+    public Long countGroup(@PathVariable String id){
+        Company company = companyService.getCompanyById(id);
+        Long countDeviceGroups = companyService.countDeviceGroupsByCompany(company);
+        return countDeviceGroups;
+    }
+    @GetMapping("/client/count/{id}")
+    public Long countClient(@PathVariable String id){
+        Company company = companyService.getCompanyById(id);
+        Long countClients = companyService.countClientsByCompany(company);
+        return countClients;
+    }
+    @GetMapping("/count")
+    public Long countClient(){
+        Long countClients = companyService.countCompany();
+        return countClients;
     }
 }

@@ -1,6 +1,7 @@
 package org.sid.api;
 
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 
 import org.sid.dao.entity.AppRole;
@@ -20,8 +21,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("users")
-@CrossOrigin("*")
 @RequiredArgsConstructor
+@Api(tags = "user", description = "Endpoints to manage users")
+
+
 public class AuthController extends AbstractController {
     private final AccountService accountService;
 

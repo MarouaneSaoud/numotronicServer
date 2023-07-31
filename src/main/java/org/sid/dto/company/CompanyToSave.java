@@ -10,7 +10,7 @@ import javax.persistence.Id;
 
 public class CompanyToSave {
 
-    private  String name;
+    private String name;
     private String altname;
     private String cin ;
     private String address;

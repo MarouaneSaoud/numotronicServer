@@ -1,5 +1,6 @@
 package org.sid.api;
 
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.sid.dao.entity.Reference;
 import org.sid.service.ReferenceService;
@@ -11,6 +12,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/reference")
 @RequiredArgsConstructor
+@Api(tags = "reference", description = "Endpoints to manage references")
+
 public class ReferenceController{
     private final ReferenceService referenceService;
    /* @PostConstruct

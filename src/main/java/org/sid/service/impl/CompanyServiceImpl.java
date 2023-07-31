@@ -1,19 +1,12 @@
 package org.sid.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.sid.dao.entity.AppUser;
-import org.sid.dao.entity.Company;
-import org.sid.dao.entity.Device;
-import org.sid.dao.entity.DeviceGroup;
+import org.sid.dao.entity.*;
 import org.sid.dao.repository.CompanyRepository;
 import org.sid.dto.company.CompanyToSave;
-import org.sid.dto.user.FindUser;
 import org.sid.error.TechnicalException;
 import org.sid.service.AccountService;
 import org.sid.service.CompanyService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,15 +63,21 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Device> findDevicesByCompany(Company company) {
-        return companyRepository.findDevicesByCompany(company);
+        List<Device> devicesByCompany = companyRepository.findDevicesByCompany(company);
+        return devicesByCompany;
     }
 
     @Override
     public List<DeviceGroup> findDeviceGroupsByCompany(Company company) {
-        return companyRepository.findDeviceGroupsByCompany(company);
+        List<DeviceGroup> deviceGroupsByCompany = companyRepository.findDeviceGroupsByCompany(company);
+        return deviceGroupsByCompany;
 
     }
-
+    @Override
+    public List<Client> findClientsByCompany(Company company) {
+        List<Client> clientsByCompany = companyRepository.findClientsByCompany(company);
+        return clientsByCompany;
+    }
     @Override
     public void delete(String id) {
         companyRepository.deleteById(id);
@@ -95,6 +94,27 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public Long countDevicesByCompany(Company company) {
+        long l = companyRepository.countDevicesByCompany(company);
+        return l;
+    }
+
+    @Override
+    public Long countClientsByCompany(Company company) {
+        long l = companyRepository.countClientsByCompany(company);
+        return l;
+    }
+
+    @Override
+    public Long countDeviceGroupsByCompany(Company company) {
+        return companyRepository.countDeviceGroupsByCompany(company);
+    }
+
+    @Override
+    public Long countCompany() {
+        return companyRepository.count();
+    }
 
 
     public static String generateRandomPassword(int length) {
