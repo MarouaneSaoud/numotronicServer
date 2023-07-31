@@ -11,6 +11,6 @@ public interface DeviceService {
     List<DeviceToSend> devicelist();
     Device addDevice(DeviceToSave deviceToSave);
     void delete(Long id);
-    DeviceDto findDeviceByImei(Integer imei);
+    Device findDeviceByImei(Integer imei);
     Long countDevices ();
 }

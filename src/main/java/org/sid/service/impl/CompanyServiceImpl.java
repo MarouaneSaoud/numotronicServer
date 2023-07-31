@@ -5,6 +5,7 @@ import org.sid.dao.entity.*;
 import org.sid.dao.repository.CompanyRepository;
 import org.sid.dto.company.CompanyToSave;
 import org.sid.error.TechnicalException;
+import org.sid.functions.GenerateRandomPassword;
 import org.sid.service.AccountService;
 import org.sid.service.CompanyService;
 import org.springframework.stereotype.Service;
@@ -46,9 +47,8 @@ public class CompanyServiceImpl implements CompanyService {
             company.setDevices(new HashSet<>());
             company.setDeviceGroups(new HashSet<>());
             company.setClients(new HashSet<>());
-
-            String mdp = generateRandomPassword(8);
-            System.out.println(mdp);
+            GenerateRandomPassword grp= new GenerateRandomPassword();
+            String mdp = grp.generateRandomPassword(8);
             AppUser appUser = accountService.saveUser(company.getEmail(), company.getName(), mdp, mdp);
             accountService.addRoleToUser(appUser.getUsername(),"MANAGER");
 
@@ -117,17 +117,6 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
 
-    public static String generateRandomPassword(int length) {
-        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        StringBuilder password = new StringBuilder();
 
-        Random random = new Random();
-        for (int i = 0; i < length; i++) {
-            int index = random.nextInt(characters.length());
-            password.append(characters.charAt(index));
-        }
-
-        return password.toString();
-    }
 
 }

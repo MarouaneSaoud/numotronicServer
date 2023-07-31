@@ -3,7 +3,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +22,8 @@ public class Company {
     private  String name;
     private String altname;
     private String cin ;
+    @CreationTimestamp
+    private Date createdAt;
     private String address;
     private int postalcode;
     private String departement ;

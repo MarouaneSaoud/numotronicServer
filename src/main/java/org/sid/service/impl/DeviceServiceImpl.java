@@ -1,18 +1,16 @@
 package org.sid.service.impl;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.sid.dao.entity.Device;
 import org.sid.dao.entity.Reference;
 import org.sid.dao.repository.DeviceRepository;
 import org.sid.dao.repository.ReferenceRepository;
-import org.sid.dto.device.DeviceDto;
 import org.sid.dto.device.DeviceToSave;
 import org.sid.dto.device.DeviceToSend;
 import org.sid.dto.device.DevicesFromAPI;
 import org.sid.error.TechnicalException;
-import org.sid.function.GetDevice;
-import org.sid.function.impl.GetDeviceFromApi;
-import org.sid.mapper.DeviceMapper;
+import org.sid.functions.GetDevice;
+import org.sid.functions.impl.GetDeviceFromApi;
 import org.sid.model.StatusDevice;
 import org.sid.service.DeviceService;
 import org.springframework.stereotype.Service;
@@ -24,9 +22,10 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
-@AllArgsConstructor
+
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class DeviceServiceImpl implements DeviceService {
 
     private final DeviceRepository deviceRepository;
@@ -35,8 +34,7 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<DeviceToSend> devicelist() {
-         GetDevice getDevice= new GetDeviceFromApi();
-
+        GetDevice getDevice= new GetDeviceFromApi();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
         List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices();
         List<DeviceToSend> listDevices =  new ArrayList<>();
@@ -94,11 +92,9 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public DeviceDto findDeviceByImei(Integer imei) {
+    public Device findDeviceByImei(Integer imei) {
         Device device = deviceRepository.findDeviceByImei(imei);
-        DeviceDto deviceDto = DeviceMapper.INSTANCE.deviceToDeviceDto(device);
-        System.out.println(imei);
-        return deviceDto ;
+        return device;
     }
 
     @Override

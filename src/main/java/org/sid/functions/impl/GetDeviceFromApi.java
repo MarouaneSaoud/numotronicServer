@@ -1,7 +1,7 @@
-package org.sid.function.impl;
+package org.sid.functions.impl;
 
 import org.sid.dto.device.DevicesFromAPI;
-import org.sid.function.GetDevice;
+import org.sid.functions.GetDevice;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

@@ -3,11 +3,9 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.sid.dao.entity.Device;
 
-import org.sid.dto.device.DeviceDto;
 import org.sid.dto.device.DeviceToSave;
 import org.sid.dto.device.DeviceToSend;
 import org.sid.service.DeviceService;
-import org.sid.service.ReferenceService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,10 +41,9 @@ public class DeviceController extends AbstractController {
     }
 
     @GetMapping("/{imei}")
-    public DeviceDto findDeviceByImie(@PathVariable int imei){
-        return deviceService.findDeviceByImei(319528549);
+    public Device findDeviceByImei(@PathVariable int imei) {
+        return deviceService.findDeviceByImei(imei);
     }
-
     @GetMapping("/count")
     public Long countDevices (){
        return deviceService.countDevices();

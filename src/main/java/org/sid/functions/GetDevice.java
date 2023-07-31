@@ -1,4 +1,4 @@
-package org.sid.function;
+package org.sid.functions;
 
 import org.sid.dto.device.DevicesFromAPI;
 
