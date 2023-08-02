@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.*;
 import org.numo.dao.repository.CompanyRepository;
 import org.numo.dto.company.CompanyToSave;
+import org.numo.error.BusinessException;
 import org.numo.error.TechnicalException;
 import org.numo.functions.GenerateRandomPassword;
 import org.numo.service.AccountService;
@@ -11,6 +12,7 @@ import org.numo.service.CompanyService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Service
@@ -26,30 +28,41 @@ public class CompanyServiceImpl implements CompanyService {
     }
     @Override
     public Company addCompany(CompanyToSave companyToSave) {
-        Company company=new Company();
         try {
-            company.setId(UUID.randomUUID().toString());
-            company.setName(companyToSave.getName());
-            company.setAltname(companyToSave.getAltname());
-            company.setCin(companyToSave.getCin());
-            company.setAddress(companyToSave.getAddress());
-            company.setPostalCode(companyToSave.getPostalcode());
-            company.setDepartement(companyToSave.getDepartement());
-            company.setEmail(companyToSave.getEmail());
-            company.setWebsite(companyToSave.getWebsite());
-            company.setSkype(companyToSave.getSkype());
-            company.setIdrc(companyToSave.getIdrc());
-            company.setIdif(companyToSave.getIdif());
-            company.setPatent(companyToSave.getPatent());
-            company.setCnss(companyToSave.getCnss());
-            company.setCountry(companyToSave.getCountry());
-            company.setLogo(companyToSave.getLogo());
+
+            Company company=new Company();
+
             GenerateRandomPassword grp= new GenerateRandomPassword();
             String mdp = grp.generateRandomPassword(8);
-            AppUser appUser = accountService.saveUser(company.getEmail(), company.getName(), mdp, mdp);
-            accountService.addRoleToUser(appUser.getUsername(),"MANAGER");
 
-            company.setAccount(appUser);
+            AppUser appUser = accountService.saveUser(companyToSave.getEmail(), companyToSave.getName(), mdp, mdp);
+            System.out.println(appUser);
+            if (appUser==null) throw new BusinessException("User Not Created");
+                accountService.addRoleToUser(company.getEmail(), "MANAGER");
+                company.setAccount(appUser);
+
+                company.setId(UUID.randomUUID().toString());
+                company.setName(companyToSave.getName());
+                company.setAltName(companyToSave.getAltName());
+                company.setCin(companyToSave.getCin());
+                company.setAddress(companyToSave.getAddress());
+                company.setPostalCode(companyToSave.getPostalCode());
+                company.setDepartment(companyToSave.getDepartment());
+                company.setEmail(companyToSave.getEmail());
+                company.setWebsite(companyToSave.getWebsite());
+                company.setSkype(companyToSave.getSkype());
+                company.setIdrc(companyToSave.getIdrc());
+                company.setIdif(companyToSave.getIdif());
+                company.setPatent(companyToSave.getPatent());
+                company.setCnss(companyToSave.getCnss());
+                company.setCountry(companyToSave.getCountry());
+                company.setLogo(companyToSave.getLogo());
+
+                company.setDeviceGroups(new ArrayList<>());
+                company.setDevices(new ArrayList<>());
+                company.setClients(new ArrayList<>());
+
+
 
         return companyRepository.save(company);
         }

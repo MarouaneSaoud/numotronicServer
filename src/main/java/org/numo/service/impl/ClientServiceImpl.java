@@ -65,4 +65,9 @@ public class ClientServiceImpl implements ClientService {
     public void deleteClient(String id) {
         clientRepository.deleteById(id);
     }
+
+    @Override
+    public Long cout() {
+        return clientRepository.count();
+    }
 }

@@ -101,4 +101,9 @@ public class DeviceServiceImpl implements DeviceService {
     public Long countDevices() {
         return deviceRepository.count();
     }
+
+    @Override
+    public List<Device> findDevicesWithoutCompany() {
+        return deviceRepository.findDevicesWithoutCompany();
+    }
 }

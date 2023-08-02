@@ -12,4 +12,5 @@ public interface DeviceService {
     void delete(Long id);
     Device findDeviceByImei(Integer imei);
     Long countDevices ();
+    List<Device> findDevicesWithoutCompany();
 }

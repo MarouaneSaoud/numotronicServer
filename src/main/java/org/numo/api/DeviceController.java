@@ -47,4 +47,9 @@ public class DeviceController extends AbstractController {
     public Long countDevices (){
        return deviceService.countDevices();
     }
+    @GetMapping("/DevicesWithoutCompany")
+    public List<Device> findDevicesWithoutCompany (){
+        List<Device> devicesWithoutCompany = deviceService.findDevicesWithoutCompany();
+        return devicesWithoutCompany;
+    }
 }

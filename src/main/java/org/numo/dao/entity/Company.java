@@ -4,11 +4,13 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
 @Setter
 @Getter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -18,7 +20,7 @@ public class Company {
     private String id;
 
     private  String name;
-    private String altname;
+    private String altName;
     private String cin ;
 
     @CreationTimestamp
@@ -26,7 +28,7 @@ public class Company {
 
     private String address;
     private int postalCode;
-    private String departement ;
+    private String department ;
     private String email;
     private String website;
     private String skype ;

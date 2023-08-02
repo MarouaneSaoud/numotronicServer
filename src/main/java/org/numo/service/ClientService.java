@@ -9,6 +9,7 @@ public interface ClientService {
     List<Client> clientList();
     Client addClient (ClientToSave client);
     void deleteClient(String id);
+    Long cout();
 
 
 

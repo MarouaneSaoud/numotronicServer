@@ -7,6 +7,7 @@ import org.numo.dto.client.ClientToSave;
 import org.numo.service.ClientService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -17,9 +18,9 @@ public class ClientController {
     private final ClientService clientService;
 
 
-    /* @PostConstruct
+     /*@PostConstruct
         void init(){
-            ClientToSave clientToSave = new ClientToSave("marouane","bw11819","tessqbdbjsqbjbdbebbdzxnqddjsq",197219,"mr12@gmail.com","48fda0ce-136f-45ba-ba27-ddacc412521d");
+            ClientToSave clientToSave = new ClientToSave("mauane","bw11819","tessqbdbjsqbjbdbebbdzxnqddjsq",197219,"mrdgh12@gmail.com","7ffc8cf9-7d33-4f7f-bfc1-9180ec7045e2");
             clientService.addClient(clientToSave);
     }*/
     @GetMapping("/")
@@ -36,5 +37,9 @@ public class ClientController {
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable String id){
         clientService.deleteClient(id);
+    }
+    @GetMapping("/count")
+    public Long count(){
+        return clientService.cout();
     }
 }

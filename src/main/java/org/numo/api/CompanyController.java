@@ -10,6 +10,7 @@ import org.numo.dto.company.CompanyToSave;
 import org.numo.service.CompanyService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RestController
@@ -19,9 +20,10 @@ import java.util.List;
 public class CompanyController {
 
     private final CompanyService companyService;
-   /* @PostConstruct
+
+  /* @PostConstruct
     void init(){
-        CompanyToSave companyToSave = new CompanyToSave("X","test","test","test",1234,"test","x@gmail.com","test","test",12345,1234,1234,1234,"test","test");
+        CompanyToSave companyToSave = new CompanyToSave("aya120","test","test","test",13467,"test","crf@gmail.com","test","test",12345,1234,1234,1234,"test","test");
         companyService.addCompany(companyToSave);
     }*/
     @GetMapping("/")
@@ -30,6 +32,7 @@ public class CompanyController {
     }
     @PostMapping("/save")
     public Company company(@RequestBody CompanyToSave companyToSave){
+        System.out.println(companyToSave);
         return companyService.addCompany(companyToSave);
     }
     @GetMapping("/{id}")
@@ -49,7 +52,7 @@ public class CompanyController {
         return devicesByCompany;
     }
     
-    @GetMapping("/groupDevice/{id}")
+    @GetMapping("/deviceGroup/{id}")
     public List<DeviceGroup> deviceGroups(@PathVariable String  id){
         Company company = companyService.getCompanyById(id);
         List<DeviceGroup> deviceGroups = companyService.findDeviceGroupsByCompany(company);
