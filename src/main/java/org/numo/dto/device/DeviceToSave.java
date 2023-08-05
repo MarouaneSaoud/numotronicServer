@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigInteger;
+
 @Getter
 @Setter
 @AllArgsConstructor
 public class DeviceToSave {
     private int serialNum;
-    private int imei;
+    private Integer imei;
     private String description;
     private Long reference;
 

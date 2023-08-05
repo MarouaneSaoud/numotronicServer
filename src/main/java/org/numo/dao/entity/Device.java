@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigInteger;
 import java.util.Date;
 
 @Data
@@ -22,7 +23,7 @@ public class Device {
 
     @Column(unique = true)
     @NotNull
-    private int imei;
+    private Integer imei;
 
     private String description;
 
