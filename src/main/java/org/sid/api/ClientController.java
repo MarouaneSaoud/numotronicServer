@@ -20,7 +20,7 @@ public class ClientController {
 
      @PostConstruct
     void init(){
-         ClientToSave clientToSave = new ClientToSave("marouane","bw17819","test",197219,"test","90c9b9a8-0981-48b7-b489-5a802274ef6f");
+         ClientToSave clientToSave = new ClientToSave("aya","bw11819","tessqbdbjsqbjbdbebbdzxnqddjsq",197219,"aya@gmail.com","29cabbfe-6aa3-4a6f-Ab0e-8e8a84326253");
          clientService.addClient(clientToSave);
     }
 
