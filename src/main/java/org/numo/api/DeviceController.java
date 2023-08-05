@@ -3,6 +3,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.Device;
 
+import org.numo.dto.company.DeviceToCompany;
 import org.numo.dto.device.DeviceToSave;
 import org.numo.dto.device.DeviceToSend;
 import org.numo.service.DeviceService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 @RestController
@@ -19,9 +21,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
-  /*  @PostConstruct
+   /*@PostConstruct
     void init(){
-        deviceService.addDevice(new DeviceToSave(319528549,319528549,"grs", 1L));
+        deviceService.addDevice(new DeviceToSave(3195,1841891299,"grs", 1L));
     }*/
     @GetMapping("/")
     public List<DeviceToSend> getDevice() {
@@ -51,5 +53,15 @@ public class DeviceController extends AbstractController {
     public List<Device> findDevicesWithoutCompany (){
         List<Device> devicesWithoutCompany = deviceService.findDevicesWithoutCompany();
         return devicesWithoutCompany;
+    }
+    @PostMapping("/allocateDevice")
+    public  boolean allocate(@RequestBody DeviceToCompany device){
+        Boolean status = deviceService.allocateDeviceToCompany(device);
+        return status;
+    }
+    @GetMapping("/decommissionDevice/{imei}")
+    public boolean decommission(@PathVariable int imei){
+        Boolean status = deviceService.decommissionDeviceToCompany(imei);
+        return status;
     }
 }

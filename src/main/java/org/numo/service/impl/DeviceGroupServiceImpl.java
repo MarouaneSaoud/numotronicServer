@@ -33,7 +33,7 @@ public class DeviceGroupServiceImpl implements DeviceGroupService {
             Company company = companyService.getCompanyById(deviceGroupToSave.getCompany());
             if (company != null) {
                 deviceGroup.setCompany(company);
-                deviceGroup.setName(deviceGroupToSave.getName()+" / "+company.getName());
+                deviceGroup.setName(deviceGroupToSave.getName()+"-"+company.getName());
                 DeviceGroup save = deviceGroupRepository.save(deviceGroup);
                 return save;
             } else {

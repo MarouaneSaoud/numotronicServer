@@ -1,6 +1,7 @@
 package org.numo.dto.device;
 
 import lombok.*;
+import org.numo.dao.entity.Company;
 import org.numo.model.StatusDevice;
 
 @Getter
@@ -16,4 +17,5 @@ public class DeviceToSend {
     private StatusDevice statusDevice;
     private String firmware;
     private String configuration;
+    private String company ;
 }

@@ -1,6 +1,7 @@
 package org.numo.service;
 
 import org.numo.dao.entity.Device;
+import org.numo.dto.company.DeviceToCompany;
 import org.numo.dto.device.DeviceToSave;
 import org.numo.dto.device.DeviceToSend;
 
@@ -13,4 +14,6 @@ public interface DeviceService {
     Device findDeviceByImei(Integer imei);
     Long countDevices ();
     List<Device> findDevicesWithoutCompany();
+    Boolean allocateDeviceToCompany(DeviceToCompany deviceToCompany);
+    Boolean decommissionDeviceToCompany(int imei);
 }

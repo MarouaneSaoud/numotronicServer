@@ -32,12 +32,11 @@ public class Device {
     @ManyToOne
     private Reference reference;
 
-    @ManyToOne(optional = true)
+    @ManyToOne
     @JoinColumn(name = "company_id")
-
     private Company company;
-    @ManyToOne(optional = true)
 
+    @ManyToOne
     @JoinColumn(name = "device_group_id")
     private DeviceGroup deviceGroup;
 

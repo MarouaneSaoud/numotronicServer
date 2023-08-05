@@ -5,6 +5,7 @@ import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.entity.DeviceGroup;
 import org.numo.dto.company.CompanyToSave;
+import org.numo.dto.company.DeviceToCompany;
 
 import java.util.List;
 
@@ -21,5 +22,6 @@ public interface CompanyService {
     Long countClientsByCompany(Company company);
     Long countDeviceGroupsByCompany(Company company);
     Long countCompany();
+
 
  }
