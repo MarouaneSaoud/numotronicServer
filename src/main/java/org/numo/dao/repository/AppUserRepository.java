@@ -12,4 +12,5 @@ public interface AppUserRepository extends JpaRepository<AppUser, Long> {
     AppUser findByUsername(String username);
     @Query("SELECT u FROM AppUser u JOIN u.roles r WHERE r.roleName= 'admin'")
     List<AppUser> findAdminUsers();
+
 }

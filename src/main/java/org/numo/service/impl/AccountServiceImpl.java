@@ -62,4 +62,16 @@ public class AccountServiceImpl implements AccountService {
     public List<AppUser> findAdminUsers() {
         return appUserRepository.findAdminUsers();
     }
+
+    @Override
+    public Boolean DisableUser(Long id) {
+        AppUser appUser = appUserRepository.findById(id).orElse(null);
+        if (appUser == null)
+            return false;
+        else {
+            appUser.setActived(false);
+            return true;
+        }
+
+    }
 }

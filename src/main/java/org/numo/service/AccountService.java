@@ -12,5 +12,5 @@ public interface AccountService {
     AppUser loadUserByUsername(String username);
     void addRoleToUser(String username,String rolename);
     List<AppUser> findAdminUsers();
-
+    Boolean DisableUser (Long id);
 }
