@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.math.BigInteger;
 import java.util.*;
 
 @RestController
@@ -21,6 +22,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
+
    /*@PostConstruct
     void init(){
         deviceService.addDevice(new DeviceToSave(3195,3195131219,"grs", 1L));
