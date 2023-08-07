@@ -63,5 +63,4 @@ public class DeviceController extends AbstractController {
     public boolean decommission(@PathVariable String imei){
         Boolean status = deviceService.decommissionDeviceToCompany(imei);
         return status;
-    }
-}
+    }}
