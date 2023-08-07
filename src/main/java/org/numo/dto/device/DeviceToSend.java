@@ -12,7 +12,7 @@ import org.numo.model.StatusDevice;
 public class DeviceToSend {
 
     private Long id;
-    private Integer imei;
+    private String imei;
     private String time;
     private StatusDevice statusDevice;
     private String firmware;

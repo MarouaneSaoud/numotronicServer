@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Long> {
-    Device findDeviceByImei(Integer imei);
+    Device findDeviceByImei(String imei);
     @Query("SELECT d FROM Device d WHERE d.company IS NULL")
     List<Device> findDevicesWithoutCompany();
 

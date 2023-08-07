@@ -22,7 +22,7 @@ public class Device {
 
     @Column(unique = true)
     @NotNull
-    private int imei;
+    private String imei;
 
     private String description;
 

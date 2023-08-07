@@ -17,7 +17,7 @@ public class GetDeviceFromApi implements GetDevice {
     public List<DevicesFromAPI> AllDevices(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
         RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = "https://gps-api-4beb.onrender.com/api/regrouped-data";
+        String apiUrl = "https://gps-api-4beb.onrender.com/devices";
         ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
         Map<String, Object> responseBody = responseEntity.getBody();
 

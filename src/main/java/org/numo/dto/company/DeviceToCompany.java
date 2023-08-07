@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class DeviceToCompany {
-    private int imei;
+    private String imei;
     private String company ;
 }
