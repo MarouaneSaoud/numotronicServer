@@ -32,7 +32,6 @@ public class CompanyController {
     }
     @PostMapping("/save")
     public Company company(@RequestBody CompanyToSave companyToSave){
-        System.out.println(companyToSave);
         return companyService.addCompany(companyToSave);
     }
     @GetMapping("/{id}")

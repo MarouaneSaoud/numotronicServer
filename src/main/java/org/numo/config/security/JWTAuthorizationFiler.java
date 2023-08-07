@@ -24,8 +24,8 @@ public class JWTAuthorizationFiler extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-       String autorizationToken = request.getHeader("Authorization");
-       if(autorizationToken!=null && autorizationToken.startsWith("Bearer ")){
+       String autorizationToken = request.getHeader(SecurityParams.JWT_HEADER_NAME);
+       if(autorizationToken!=null && autorizationToken.startsWith(SecurityParams.HEADER_PREFIX)){
             try {
                 String jwt =autorizationToken.substring(7);
                 System.out.println(jwt);

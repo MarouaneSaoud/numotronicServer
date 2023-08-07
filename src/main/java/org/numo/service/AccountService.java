@@ -11,4 +11,5 @@ public interface AccountService {
     AppRole saveRole(AppRole role);
     AppUser loadUserByUsername(String username);
     void addRoleToUser(String username,String rolename);
+    AppUser saveUserAdmin(String username , String name,String password,String confirmedPassword);
 }
