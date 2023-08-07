@@ -11,9 +11,9 @@ public interface DeviceService {
     List<DeviceToSend> devicelist();
     Device addDevice(DeviceToSave deviceToSave);
     void delete(Long id);
-    Device findDeviceByImei(Integer imei);
+    Device findDeviceByImei(String imei);
     Long countDevices ();
     List<Device> findDevicesWithoutCompany();
     Boolean allocateDeviceToCompany(DeviceToCompany deviceToCompany);
-    Boolean decommissionDeviceToCompany(int imei);
+    Boolean decommissionDeviceToCompany(String imei);
 }

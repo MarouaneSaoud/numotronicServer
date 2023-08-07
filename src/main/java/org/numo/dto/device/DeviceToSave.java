@@ -11,7 +11,7 @@ import java.math.BigInteger;
 @AllArgsConstructor
 public class DeviceToSave {
     private int serialNum;
-    private Integer imei;
+    private String imei;
     private String description;
     private Long reference;
 

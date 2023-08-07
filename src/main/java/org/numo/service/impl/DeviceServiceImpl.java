@@ -45,11 +45,11 @@ public class DeviceServiceImpl implements DeviceService {
         List<DeviceToSend> listDevices =  new ArrayList<>();
         for (DevicesFromAPI devices : devicesFromAPI) {
 
-            Device deviceByImei = deviceRepository.findDeviceByImei(Integer.parseInt(devices.getIMEI()));
+            Device deviceByImei = deviceRepository.findDeviceByImei(devices.getIMEI());
                 if (deviceByImei!=null ){
                     DeviceToSend device= new DeviceToSend();
                     device.setId(deviceByImei.getId());
-                    device.setImei(Integer.parseInt(devices.getIMEI()));
+                    device.setImei(devices.getIMEI());
                     device.setTime(devices.getLastSeen());
                     device.setFirmware(devices.getFirware());
                     device.setConfiguration(devices.getConfig());
@@ -98,7 +98,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Device findDeviceByImei(Integer imei) {
+    public Device findDeviceByImei(String imei) {
         Device device = deviceRepository.findDeviceByImei(imei);
         return device;
     }
@@ -126,7 +126,7 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public Boolean decommissionDeviceToCompany(int imei) {
+    public Boolean decommissionDeviceToCompany(String imei) {
         Device device = deviceRepository.findDeviceByImei(imei);
         if (device==null)throw new BusinessException("Error");
         else {

@@ -22,11 +22,11 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DeviceController extends AbstractController {
     private final DeviceService deviceService;
-//   @PostConstruct
-//    void init(){
-//
-//       deviceService.addDevice(new DeviceToSave(3195,319513121,"grs", 1L));
-//    }
+
+   /*@PostConstruct
+    void init(){
+        deviceService.addDevice(new DeviceToSave(3195,3195131219,"grs", 1L));
+    }*/
     @GetMapping("/")
     public List<DeviceToSend> getDevice() {
         List<DeviceToSend> devicelist = deviceService.devicelist();
@@ -44,7 +44,7 @@ public class DeviceController extends AbstractController {
     }
 
     @GetMapping("/{imei}")
-    public Device findDeviceByImei(@PathVariable int imei) {
+    public Device findDeviceByImei(@PathVariable String imei) {
         return deviceService.findDeviceByImei(imei);
     }
     @GetMapping("/count")
@@ -62,7 +62,7 @@ public class DeviceController extends AbstractController {
         return status;
     }
     @GetMapping("/decommissionDevice/{imei}")
-    public boolean decommission(@PathVariable int imei){
+    public boolean decommission(@PathVariable String imei){
         Boolean status = deviceService.decommissionDeviceToCompany(imei);
         return status;
     }

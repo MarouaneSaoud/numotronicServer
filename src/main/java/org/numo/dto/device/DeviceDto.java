@@ -11,7 +11,7 @@ import java.util.Date;
 public class DeviceDto {
     private Long id;
     private int serialNum;
-    private int imei;
+    private String imei;
     private String description;
     private Date createdAt;
     private ReferenceDto reference;
