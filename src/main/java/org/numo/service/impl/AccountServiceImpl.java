@@ -57,4 +57,9 @@ public class AccountServiceImpl implements AccountService {
         AppRole appRole = appRoleRepository.findByRoleName(rolename);
         appUser.getRoles().add(appRole);
     }
+
+    @Override
+    public List<AppUser> findAdminUsers() {
+        return appUserRepository.findAdminUsers();
+    }
 }
