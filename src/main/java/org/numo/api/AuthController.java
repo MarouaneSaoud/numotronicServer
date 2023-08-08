@@ -90,7 +90,6 @@ public class AuthController extends AbstractController {
     public Boolean unableUser(@PathVariable Long id){
         return accountService.UnableUser(id);
     }
-
 }
 
 
