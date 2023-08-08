@@ -69,6 +69,11 @@ public class AuthController extends AbstractController {
     public void AddRoleTo(@RequestBody AppRole role) {
         accountService.saveRole(role);
     }
+    @PostMapping("/register/admin")
+    public AppUser registerAdmin(@RequestBody UserForm userForm) {
+        return accountService.saveUserAdmin(
+                userForm.getUsername(),userForm.getName(), userForm.getPassword(), userForm.getConfirmedPassword());
+    }
 
 
     @GetMapping("/findAdminUsers")

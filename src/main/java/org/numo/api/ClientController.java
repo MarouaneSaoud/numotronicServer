@@ -18,9 +18,9 @@ public class ClientController {
     private final ClientService clientService;
 
 
-     /*@PostConstruct
+    /* @PostConstruct
         void init(){
-            ClientToSave clientToSave = new ClientToSave("mauane","bw11819","tessqbdbjsqbjbdbebbdzxnqddjsq",197219,"mrdgh12@gmail.com","7ffc8cf9-7d33-4f7f-bfc1-9180ec7045e2");
+            ClientToSave clientToSave = new ClientToSave("mauane","bw11819","tessqbdbjsqbjbdbebbdzxnqddjsq",197219,"mrdgh12@gmail.com","E3e9c845-Bdb5-45eb-9775-2a16a49e6703");
             clientService.addClient(clientToSave);
     }*/
     @GetMapping("/")

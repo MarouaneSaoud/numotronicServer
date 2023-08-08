@@ -17,11 +17,11 @@ import java.util.List;
 @Api(tags = "deviceGroup", description = "Endpoints to manage device group")
 public class DeviceGroupController {
     private final DeviceGroupService deviceGroupService;
- /*  @PostConstruct
+   @PostConstruct
     void init() {
-        DeviceGroupToSave deviceGroupToSave = new DeviceGroupToSave( "device groupe 1" ,"7ffc8cf9-7d33-4f7f-Bfc1-9180ec7045e2");
+        DeviceGroupToSave deviceGroupToSave = new DeviceGroupToSave( "device groupe 1" ,"E3e9c845-Bdb5-45eb-9775-2a16a49e6703");
         deviceGroupService.addDeviceGroup(deviceGroupToSave);
-    }*/
+    }
     @GetMapping("/")
     public List<DeviceGroup> getDeviceGroups() {
         List<DeviceGroup> deviceGroups = deviceGroupService.deviceGroups();

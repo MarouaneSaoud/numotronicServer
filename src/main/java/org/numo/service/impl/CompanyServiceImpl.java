@@ -36,11 +36,11 @@ public class CompanyServiceImpl implements CompanyService {
             String mdp = grp.generateRandomPassword(8);
 
             AppUser appUser = accountService.saveUser(companyToSave.getEmail(), companyToSave.getName(), mdp, mdp);
-            System.out.println(appUser);
-            if (appUser==null) throw new BusinessException("User Not Created");
-                accountService.addRoleToUser(company.getEmail(), "MANAGER");
-                company.setAccount(appUser);
 
+            if (appUser==null) throw new BusinessException("User Not Created");
+            else accountService.addRoleToUser(appUser.getUsername(), "MANAGER");
+
+                company.setAccount(appUser);
                 company.setId(UUID.randomUUID().toString());
                 company.setName(companyToSave.getName());
                 company.setAltName(companyToSave.getAltName());
