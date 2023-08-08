@@ -13,7 +13,6 @@ public interface AccountService {
     void addRoleToUser(String username,String rolename);
     List<AppUser> findAdminUsers();
     Boolean DisableUser (Long id);
-
     AppUser saveUserAdmin(String username , String name,String password,String confirmedPassword);
 
 }

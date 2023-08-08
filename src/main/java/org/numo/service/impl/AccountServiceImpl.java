@@ -74,11 +74,10 @@ public class AccountServiceImpl implements AccountService {
         }
 
     }
-
+    @Override
     public AppUser saveUserAdmin(String username, String name, String password, String confirmedPassword) {
         AppUser appUser = this.saveUser(username, name, password, confirmedPassword);
         this.addRoleToUser(appUser.getUsername(), "ADMIN");
         return appUser;
     }
-
 }
