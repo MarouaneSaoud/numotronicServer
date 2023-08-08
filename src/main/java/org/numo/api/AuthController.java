@@ -76,6 +76,13 @@ public class AuthController extends AbstractController {
     }
 
 
+    @GetMapping("/findAdminUsers")
+    public List<AppUser> findAdminUsers() {
+        return accountService.findAdminUsers();
+    }
+
+
+
 }
 
 

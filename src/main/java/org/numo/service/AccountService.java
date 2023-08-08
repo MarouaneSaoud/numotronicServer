@@ -12,4 +12,7 @@ public interface AccountService {
     AppUser loadUserByUsername(String username);
     void addRoleToUser(String username,String rolename);
     AppUser saveUserAdmin(String username , String name,String password,String confirmedPassword);
+
+    List<AppUser> findAdminUsers();
+
 }

@@ -65,4 +65,7 @@ public class AccountServiceImpl implements AccountService {
         return appUser;
     }
 
+    public List<AppUser> findAdminUsers() {
+        return appUserRepository.findAdminUsers();
+    }
 }

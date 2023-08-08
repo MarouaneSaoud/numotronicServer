@@ -39,39 +39,56 @@ public class DeviceServiceImpl implements DeviceService {
 
     @Override
     public List<DeviceToSend> devicelist() {
-        GetDevice getDevice= new GetDeviceFromApi();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+        GetDevice getDevice = new GetDeviceFromApi();
         List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices();
-        List<DeviceToSend> listDevices =  new ArrayList<>();
+        Set<String> activeImeis = new HashSet<>();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<DeviceToSend> listDevices = new ArrayList<>();
+
         for (DevicesFromAPI devices : devicesFromAPI) {
-
             Device deviceByImei = deviceRepository.findDeviceByImei(devices.getIMEI());
-                if (deviceByImei!=null ){
-                    DeviceToSend device= new DeviceToSend();
-                    device.setId(deviceByImei.getId());
-                    device.setImei(devices.getIMEI());
-                    device.setTime(devices.getLastSeen());
-                    device.setFirmware(devices.getFirware());
-                    device.setConfiguration(devices.getConfig());
-                    if (deviceByImei.getCompany()!=null) device.setCompany(deviceByImei.getCompany().getName());
-                    else device.setCompany(null);
-                    try {
-                    LocalDateTime lastSeenDateTime = LocalDateTime.parse(devices.getLastSeen(), formatter);
-                    LocalDateTime currentDateTime = LocalDateTime.now();
-
-                    if (ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime) <= 6) {
-                        device.setStatusDevice(StatusDevice.ONLINE);
-                    } else if (ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime) >= 6){
-                        device.setStatusDevice(StatusDevice.OFFLINE);
-                    }
-                } catch (DateTimeParseException e) {
-                    e.printStackTrace();
+            if (deviceByImei != null) {
+                DeviceToSend device = new DeviceToSend();
+                device.setId(deviceByImei.getId());
+                device.setImei(devices.getIMEI());
+                device.setTime(devices.getLastSeen());
+                device.setFirmware(devices.getFirware());
+                device.setConfiguration(devices.getConfig());
+                if (deviceByImei.getCompany() != null) {
+                    device.setCompany(deviceByImei.getCompany().getName());
                 }
+                device.setStatusDevice(calculateDeviceStatus(devices.getLastSeen(), currentDateTime));
+                activeImeis.add(devices.getIMEI());
                 listDevices.add(device);
             }
-
         }
+
+        for (Device d : deviceRepository.findAll()) {
+            if (!activeImeis.contains(d.getImei())) {
+                DeviceToSend device = new DeviceToSend();
+                device.setId(d.getId());
+                device.setImei(d.getImei());
+                device.setTime(null);
+                device.setFirmware(null);
+                device.setConfiguration(null);
+                device.setStatusDevice(StatusDevice.INACTIF);
+                listDevices.add(device);
+            }
+        }
+
         return listDevices;
+    }
+
+    private StatusDevice calculateDeviceStatus(String lastSeenDateTimeStr, LocalDateTime currentDateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+        LocalDateTime lastSeenDateTime = LocalDateTime.parse(lastSeenDateTimeStr, formatter);
+
+        long hoursSinceLastSeen = ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime);
+        if (hoursSinceLastSeen <= 6) {
+            return StatusDevice.ONLINE;
+        } else {
+            return StatusDevice.OFFLINE;
+        }
     }
 
     @Override
