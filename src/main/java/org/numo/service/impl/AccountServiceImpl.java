@@ -72,12 +72,22 @@ public class AccountServiceImpl implements AccountService {
             appUser.setActived(false);
             return true;
         }
-
     }
     @Override
     public AppUser saveUserAdmin(String username, String name, String password, String confirmedPassword) {
         AppUser appUser = this.saveUser(username, name, password, confirmedPassword);
         this.addRoleToUser(appUser.getUsername(), "ADMIN");
         return appUser;
+    }
+
+    @Override
+    public Boolean UnableUser(Long id) {
+        AppUser appUser = appUserRepository.findById(id).orElse(null);
+        if (appUser == null)
+            return false;
+        else {
+            appUser.setActived(true);
+            return true;
+        }
     }
 }

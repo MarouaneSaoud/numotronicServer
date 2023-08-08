@@ -81,6 +81,15 @@ public class AuthController extends AbstractController {
         return accountService.findAdminUsers();
     }
 
+    @GetMapping("/disableUser/{id}")
+    public Boolean disableUser(@PathVariable Long id){
+        return accountService.DisableUser(id);
+    }
+
+    @GetMapping("/unableUser/{id}")
+    public Boolean unableUser(@PathVariable Long id){
+        return accountService.UnableUser(id);
+    }
 
 
 }
