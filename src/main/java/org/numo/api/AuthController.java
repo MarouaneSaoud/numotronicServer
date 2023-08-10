@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 
 import org.numo.dao.entity.AppRole;
 import org.numo.dao.entity.AppUser;
-import org.numo.dto.user.FindUser;
 import org.numo.dto.user.RoleUserForm;
 import org.numo.dto.user.UserForm;
 import org.numo.error.BusinessException;
@@ -15,7 +14,6 @@ import org.numo.service.AccountService;
 import org.springframework.web.bind.annotation.*;
 
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,9 +52,9 @@ public class AuthController extends AbstractController {
         return accountService.saveUser(
                 userForm.getUsername(),userForm.getName(), userForm.getPassword(), userForm.getConfirmedPassword());
     }
-    @PostMapping(value = "/loadUsername")
-    public  AppUser loadUserByUserName(@RequestBody FindUser user){
-        AppUser appUser = accountService.loadUserByUsername(user.getUserName());
+    @GetMapping(value = "/loadUsername/{username}")
+    public  AppUser loadUserByUserName(@PathVariable String username){
+        AppUser appUser = accountService.loadUserByUsername(username);
         return Optional.ofNullable(appUser).orElseThrow(() -> new BusinessException("User not found"));
     }
 
