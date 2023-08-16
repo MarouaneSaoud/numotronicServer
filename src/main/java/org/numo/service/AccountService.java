@@ -15,4 +15,5 @@ public interface AccountService {
     Boolean DisableUser (Long id);
     AppUser saveUserAdmin(String username , String name,String password,String confirmedPassword);
     Boolean UnableUser(Long id);
+    void delete (Long id);
 }

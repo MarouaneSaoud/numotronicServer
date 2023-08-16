@@ -25,7 +25,6 @@ import java.util.*;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final AccountService accountService;
-    private final DeviceRepository deviceRepository;
     private final ClientRepository  clientRepository;
     private final DeviceGroupRepository deviceGroupRepository;
 
@@ -109,6 +108,7 @@ public class CompanyServiceImpl implements CompanyService {
                 d.setDeviceGroup(null);
             }
             companyRepository.delete(company);
+            accountService.delete(company.getAccount().getId());
         }else {
             throw new BusinessException("Company not found");
         }

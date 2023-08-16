@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.AppUser;
 import org.numo.dao.entity.Client;
 import org.numo.dao.entity.Company;
+import org.numo.dao.entity.Device;
 import org.numo.dao.repository.ClientRepository;
 import org.numo.dto.client.ClientToSave;
 import org.numo.error.TechnicalException;
@@ -20,7 +21,7 @@ import java.util.UUID;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl implements ClientService  {
     private final ClientRepository clientRepository;
     private final CompanyService companyService;
     private final AccountService accountService;
@@ -69,5 +70,10 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Long cout() {
         return clientRepository.count();
+    }
+    @Override
+    public List<Device> findDevicesByClientId(String id) {
+        List<Device> devicesById = clientRepository.findDevicesByClientId(id);
+        return devicesById;
     }
 }

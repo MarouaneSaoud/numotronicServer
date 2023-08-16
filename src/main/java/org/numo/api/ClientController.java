@@ -3,6 +3,7 @@ package org.numo.api;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.Client;
+import org.numo.dao.entity.Device;
 import org.numo.dto.client.ClientToSave;
 import org.numo.service.ClientService;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,6 @@ import java.util.List;
 @Api(tags = "client", description = "Endpoints to manage clients")
 public class ClientController {
     private final ClientService clientService;
-
 
     /* @PostConstruct
         void init(){
@@ -42,4 +42,9 @@ public class ClientController {
     public Long count(){
         return clientService.cout();
     }
+    @GetMapping("/findDevicesById/{id}")
+    public List<Device> findDevicesById(@PathVariable String id){
+        return clientService.findDevicesByClientId(id);
+    }
+
 }

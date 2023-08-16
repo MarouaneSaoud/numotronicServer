@@ -90,4 +90,9 @@ public class AccountServiceImpl implements AccountService {
             return true;
         }
     }
+
+    @Override
+    public void delete(Long id) {
+        appUserRepository.deleteById(id);
+    }
 }
