@@ -2,13 +2,17 @@ package org.numo.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.*;
+import org.numo.dao.repository.ClientRepository;
 import org.numo.dao.repository.CompanyRepository;
+import org.numo.dao.repository.DeviceGroupRepository;
+import org.numo.dao.repository.DeviceRepository;
 import org.numo.dto.company.CompanyToSave;
 import org.numo.error.BusinessException;
 import org.numo.error.TechnicalException;
 import org.numo.functions.GenerateRandomPassword;
 import org.numo.service.AccountService;
 import org.numo.service.CompanyService;
+import org.numo.service.DeviceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +25,9 @@ import java.util.*;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
     private final AccountService accountService;
+    private final DeviceRepository deviceRepository;
+    private final ClientRepository  clientRepository;
+    private final DeviceGroupRepository deviceGroupRepository;
 
     @Override
     public List<Company> company_list() {
@@ -90,7 +97,22 @@ public class CompanyServiceImpl implements CompanyService {
     }
     @Override
     public void delete(String id) {
-        companyRepository.deleteById(id);
+        Company company= companyRepository.findById(id).orElse(null);
+        if(company!=null) {
+            List<Client> clients = companyRepository.findClientsByCompany(company);
+            List<Device> devices = companyRepository.findDevicesByCompany(company);
+            List<DeviceGroup> deviceGroups = companyRepository.findDeviceGroupsByCompany(company);
+            clientRepository.deleteAll(clients);
+            deviceGroupRepository.deleteAll(deviceGroups);
+            for (Device d : devices){
+                d.setCompany(null);
+                d.setDeviceGroup(null);
+            }
+            companyRepository.delete(company);
+        }else {
+            throw new BusinessException("Company not found");
+        }
+
     }
 
     @Override
