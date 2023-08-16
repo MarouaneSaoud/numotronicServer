@@ -15,7 +15,7 @@
     <description>project for Spring Boot</description>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
@@ -65,7 +65,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
+            <version>1.18.26</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -83,14 +84,30 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
+        <finalName>ws-backend-application</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+            </plugin>
+
+            <!-- Configuration du plugin Maven Compiler -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+
+                    <source>1.8</source> <!-- Spécifiez ici la version de Java que vous utilisez -->
+                    <target>1.8</target> <!-- Spécifiez ici la version de Java que vous utilisez -->
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
 
 </project>
