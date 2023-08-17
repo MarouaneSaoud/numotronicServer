@@ -7,9 +7,14 @@ import org.numo.dao.repository.CompanyRepository;
 import org.numo.dao.repository.DeviceGroupRepository;
 import org.numo.dao.repository.DeviceRepository;
 import org.numo.dto.company.CompanyToSave;
+import org.numo.dto.device.DeviceToSend;
+import org.numo.dto.device.DevicesFromAPI;
 import org.numo.error.BusinessException;
 import org.numo.error.TechnicalException;
+import org.numo.functions.CalculateDeviceStatus;
 import org.numo.functions.GenerateRandomPassword;
+import org.numo.functions.GetDevice;
+import org.numo.functions.impl.GetDeviceFromApi;
 import org.numo.service.AccountService;
 import org.numo.service.CompanyService;
 import org.numo.service.DeviceService;
@@ -17,13 +22,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
+    private final DeviceRepository deviceRepository;
     private final AccountService accountService;
     private final ClientRepository  clientRepository;
     private final DeviceGroupRepository deviceGroupRepository;
@@ -78,9 +86,37 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public List<Device> findDevicesByCompany(Company company) {
-        List<Device> devicesByCompany = companyRepository.findDevicesByCompany(company);
-        return devicesByCompany;
+    public List<DeviceToSend> findDevicesByCompany(Company company) {
+        GetDevice getDevice = new GetDeviceFromApi();
+        List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices(); // add time out
+        Set<String> activeImies = new HashSet<>();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<DeviceToSend> listDevices = new ArrayList<>();
+
+        for (DevicesFromAPI devices : devicesFromAPI) {
+            List<Device> devicesByCompany = companyRepository.findDevicesByCompany(company);
+            System.out.println(devices);
+            for (Device d : devicesByCompany) {
+                    Device deviceByImei = deviceRepository.findDeviceByImei(d.getImei());
+                    if (deviceByImei != null && deviceByImei.equals(d.getImei())) {
+                        DeviceToSend device = new DeviceToSend();
+                        device.setId(deviceByImei.getId());
+                        device.setImei(devices.getIMEI());
+                        device.setTime(devices.getLastSeen());
+                        device.setFirmware(devices.getFirware());
+                        device.setConfiguration(devices.getConfig());
+                        if (deviceByImei.getCompany() != null) {
+                            device.setCompany(deviceByImei.getCompany().getName());
+                        }
+                        CalculateDeviceStatus status = new CalculateDeviceStatus();
+                        device.setStatusDevice(status.calculateDeviceStatus(devices.getLastSeen(), currentDateTime));
+                        activeImies.add(devices.getIMEI());
+                        listDevices.add(device);
+                    }
+                }
+            }
+            return listDevices;
+
     }
 
     @Override

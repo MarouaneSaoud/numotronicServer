@@ -12,6 +12,7 @@ import org.numo.dto.device.DeviceToSend;
 import org.numo.dto.device.DevicesFromAPI;
 import org.numo.error.BusinessException;
 import org.numo.error.TechnicalException;
+import org.numo.functions.CalculateDeviceStatus;
 import org.numo.functions.GetDevice;
 import org.numo.functions.impl.GetDeviceFromApi;
 import org.numo.model.StatusDevice;
@@ -40,8 +41,8 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public List<DeviceToSend> devicelist() {
         GetDevice getDevice = new GetDeviceFromApi();
-        List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices();
-        Set<String> activeImeis = new HashSet<>();
+        List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices(); // add time out
+        Set<String> activeImies = new HashSet<>();
         LocalDateTime currentDateTime = LocalDateTime.now();
         List<DeviceToSend> listDevices = new ArrayList<>();
 
@@ -57,14 +58,15 @@ public class DeviceServiceImpl implements DeviceService {
                 if (deviceByImei.getCompany() != null) {
                     device.setCompany(deviceByImei.getCompany().getName());
                 }
-                device.setStatusDevice(calculateDeviceStatus(devices.getLastSeen(), currentDateTime));
-                activeImeis.add(devices.getIMEI());
+                CalculateDeviceStatus status = new CalculateDeviceStatus();
+                device.setStatusDevice(status.calculateDeviceStatus(devices.getLastSeen(), currentDateTime));
+                activeImies.add(devices.getIMEI());
                 listDevices.add(device);
             }
         }
 
         for (Device d : deviceRepository.findAll()) {
-            if (!activeImeis.contains(d.getImei())) {
+            if (!activeImies.contains(d.getImei())) {
                 DeviceToSend device = new DeviceToSend();
                 device.setId(d.getId());
                 device.setImei(d.getImei());
@@ -79,17 +81,7 @@ public class DeviceServiceImpl implements DeviceService {
         return listDevices;
     }
 
-    private StatusDevice calculateDeviceStatus(String lastSeenDateTimeStr, LocalDateTime currentDateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
-        LocalDateTime lastSeenDateTime = LocalDateTime.parse(lastSeenDateTimeStr, formatter);
 
-        long hoursSinceLastSeen = ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime);
-        if (hoursSinceLastSeen <= 6) {
-            return StatusDevice.ONLINE;
-        } else {
-            return StatusDevice.OFFLINE;
-        }
-    }
 
     @Override
     public Device addDevice(DeviceToSave deviceToSave) {

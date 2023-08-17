@@ -7,6 +7,7 @@ import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.entity.DeviceGroup;
 import org.numo.dto.company.CompanyToSave;
+import org.numo.dto.device.DeviceToSend;
 import org.numo.service.CompanyService;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,22 +45,25 @@ public class CompanyController {
         companyService.delete(id);
     }
     
-    @GetMapping("/device/{id}")
-    public List<Device> devices(@PathVariable String id){
-        Company company = companyService.getCompanyById(id);
-        List<Device> devicesByCompany = companyService.findDevicesByCompany(company);
+    @GetMapping("/device/{email}")
+    public List<DeviceToSend> devices(@PathVariable String email){
+        Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(email);
+        Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
+        List<DeviceToSend> devicesByCompany = companyService.findDevicesByCompany(company);
         return devicesByCompany;
     }
     
-    @GetMapping("/deviceGroup/{id}")
-    public List<DeviceGroup> deviceGroups(@PathVariable String  id){
-        Company company = companyService.getCompanyById(id);
+    @GetMapping("/deviceGroup/{email}")
+    public List<DeviceGroup> deviceGroups(@PathVariable String  email){
+        Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(email);
+        Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
         List<DeviceGroup> deviceGroups = companyService.findDeviceGroupsByCompany(company);
         return deviceGroups;
     }
-    @GetMapping("/client/{id}")
-    public List<Client> clients(@PathVariable String  id){
-        Company company = companyService.getCompanyById(id);
+    @GetMapping("/client/{email}")
+    public List<Client> clients(@PathVariable String email ){
+        Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(email);
+        Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
         List<Client> clientsByCompany = companyService.findClientsByCompany(company);
         return clientsByCompany ;
     }

@@ -6,13 +6,14 @@ import org.numo.dao.entity.Device;
 import org.numo.dao.entity.DeviceGroup;
 import org.numo.dto.company.CompanyToSave;
 import org.numo.dto.company.DeviceToCompany;
+import org.numo.dto.device.DeviceToSend;
 
 import java.util.List;
 
 public interface CompanyService {
     List<Company> company_list() ;
     Company addCompany(CompanyToSave companyToSave);
-    List<Device> findDevicesByCompany(Company company);
+    List<DeviceToSend> findDevicesByCompany(Company company);
     List<DeviceGroup> findDeviceGroupsByCompany(Company company);
     List<Client> findClientsByCompany(Company company);
     void delete(String id);
