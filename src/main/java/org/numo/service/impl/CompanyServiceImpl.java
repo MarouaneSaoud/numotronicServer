@@ -98,7 +98,7 @@ public class CompanyServiceImpl implements CompanyService {
             System.out.println(devices);
             for (Device d : devicesByCompany) {
                     Device deviceByImei = deviceRepository.findDeviceByImei(d.getImei());
-                    if (deviceByImei != null && deviceByImei.equals(d.getImei())) {
+                    if (deviceByImei != null && devices.getIMEI().equals(d.getImei())) {
                         DeviceToSend device = new DeviceToSend();
                         device.setId(deviceByImei.getId());
                         device.setImei(devices.getIMEI());
@@ -116,7 +116,6 @@ public class CompanyServiceImpl implements CompanyService {
                 }
             }
             return listDevices;
-
     }
 
     @Override
