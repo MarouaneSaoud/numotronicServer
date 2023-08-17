@@ -7,6 +7,7 @@ import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.repository.ClientRepository;
 import org.numo.dto.client.ClientToSave;
+import org.numo.error.BusinessException;
 import org.numo.error.TechnicalException;
 import org.numo.functions.GenerateRandomPassword;
 import org.numo.service.AccountService;
@@ -36,7 +37,8 @@ public class ClientServiceImpl implements ClientService  {
     public Client addClient(ClientToSave clientToSave) {
         Client client = new Client();
         try {
-            Company company = companyService.getCompanyById(clientToSave.getCompanyId());
+            Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(clientToSave.getCompanyEmail());
+            Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
             if (company!=null) {
                 client.setId(UUID.randomUUID().toString());
                 client.setName(clientToSave.getName());
@@ -55,7 +57,7 @@ public class ClientServiceImpl implements ClientService  {
                 Client saved = clientRepository.save(client);
                 return saved;
             }else {
-                return null;
+                throw new BusinessException("ERROR");
             }
         } catch (TechnicalException t){
                 throw new TechnicalException("ERROR");

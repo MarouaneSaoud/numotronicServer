@@ -11,5 +11,5 @@ public class ClientToSave {
     private String address;
     private int postalCode;
     private String email;
-    private String CompanyId;
+    private String CompanyEmail;
 }
