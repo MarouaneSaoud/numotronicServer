@@ -36,9 +36,10 @@ public class ClientServiceImpl implements ClientService  {
     @Override
     public Client addClient(ClientToSave clientToSave) {
         Client client = new Client();
+        Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(clientToSave.getCompanyEmail());
         try {
-            Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(clientToSave.getCompanyEmail());
             Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
+            System.out.println(company);
             if (company!=null) {
                 client.setId(UUID.randomUUID().toString());
                 client.setName(clientToSave.getName());

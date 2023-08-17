@@ -48,7 +48,7 @@ public class CompanyServiceImpl implements CompanyService {
 
             GenerateRandomPassword grp= new GenerateRandomPassword();
             String mdp = grp.generateRandomPassword(8);
-
+            System.out.println(mdp);
             AppUser appUser = accountService.saveUser(companyToSave.getEmail(), companyToSave.getName(), mdp, mdp);
 
             if (appUser==null) throw new BusinessException("User Not Created");
@@ -95,7 +95,7 @@ public class CompanyServiceImpl implements CompanyService {
 
         for (DevicesFromAPI devices : devicesFromAPI) {
             List<Device> devicesByCompany = companyRepository.findDevicesByCompany(company);
-            System.out.println(devices);
+
             for (Device d : devicesByCompany) {
                     Device deviceByImei = deviceRepository.findDeviceByImei(d.getImei());
                     if (deviceByImei != null && devices.getIMEI().equals(d.getImei())) {
