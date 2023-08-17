@@ -15,7 +15,6 @@ import java.util.Map;
 public class GetDeviceFromApi implements GetDevice {
     @Override
     public List<DevicesFromAPI> AllDevices(){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
         RestTemplate restTemplate = new RestTemplate();
         String apiUrl = "http://160.178.179.228:3000/devices";
         ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});

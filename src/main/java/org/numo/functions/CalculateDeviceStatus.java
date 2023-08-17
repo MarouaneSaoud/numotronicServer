@@ -8,11 +8,11 @@ import java.time.temporal.ChronoUnit;
 
 public class CalculateDeviceStatus {
     public StatusDevice calculateDeviceStatus(String lastSeenDateTimeStr, LocalDateTime currentDateTime) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd,HH:mm");
         LocalDateTime lastSeenDateTime = LocalDateTime.parse(lastSeenDateTimeStr, formatter);
 
         long hoursSinceLastSeen = ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime);
-        if (hoursSinceLastSeen <= 6) {
+        if (hoursSinceLastSeen <= 1) {
             return StatusDevice.ONLINE;
         } else {
             return StatusDevice.OFFLINE;
