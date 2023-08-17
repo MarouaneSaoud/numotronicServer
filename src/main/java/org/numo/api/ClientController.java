@@ -30,6 +30,7 @@ public class ClientController {
     }
     @PostMapping("/save")
     public Client addClient(@RequestBody ClientToSave clientToSave){
+
         Client client = clientService.addClient(clientToSave);
         return client;
     }

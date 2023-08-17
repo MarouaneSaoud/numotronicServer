@@ -35,12 +35,17 @@ public class ClientServiceImpl implements ClientService  {
 
     @Override
     public Client addClient(ClientToSave clientToSave) {
+
         Client client = new Client();
         Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(clientToSave.getCompanyEmail());
+        Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
+
+
         try {
-            Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
-            System.out.println(company);
+
+
             if (company!=null) {
+
                 client.setId(UUID.randomUUID().toString());
                 client.setName(clientToSave.getName());
                 client.setAddress(clientToSave.getAddress());
@@ -59,8 +64,10 @@ public class ClientServiceImpl implements ClientService  {
                 return saved;
             }else {
                 throw new BusinessException("ERROR");
+
             }
         } catch (TechnicalException t){
+
                 throw new TechnicalException("ERROR");
         }
     }
