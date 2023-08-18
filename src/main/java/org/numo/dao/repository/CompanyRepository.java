@@ -3,6 +3,7 @@ package org.numo.dao.repository;
 import org.numo.dao.entity.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -20,5 +21,9 @@ public interface CompanyRepository extends JpaRepository<Company,String> {
     long countClientsByCompany(Company company);
     @Query("SELECT COUNT(dg) FROM DeviceGroup dg WHERE dg.company = :company")
     long countDeviceGroupsByCompany(Company company);
+    @Query("SELECT dg, COUNT(dev) FROM DeviceGroup dg LEFT JOIN dg.devices dev WHERE dg.company = :company GROUP BY dg")
+    List<Object[]> findDeviceGroupsWithDeviceCountByCompany(@Param("company") Company company);
+
+
 
 }

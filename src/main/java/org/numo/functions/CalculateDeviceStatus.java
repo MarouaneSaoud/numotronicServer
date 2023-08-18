@@ -12,7 +12,7 @@ public class CalculateDeviceStatus {
         LocalDateTime lastSeenDateTime = LocalDateTime.parse(lastSeenDateTimeStr, formatter);
 
         long hoursSinceLastSeen = ChronoUnit.HOURS.between(lastSeenDateTime, currentDateTime);
-        if (hoursSinceLastSeen <= 1) {
+        if (hoursSinceLastSeen <= 6) {
             return StatusDevice.ONLINE;
         } else {
             return StatusDevice.OFFLINE;

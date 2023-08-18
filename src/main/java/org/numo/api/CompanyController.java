@@ -7,6 +7,7 @@ import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.entity.DeviceGroup;
 import org.numo.dto.company.CompanyToSave;
+import org.numo.dto.company.DeviceGroupWithDeviceCountDTO;
 import org.numo.dto.device.DeviceToSend;
 import org.numo.service.CompanyService;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +59,14 @@ public class CompanyController {
         Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(email);
         Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
         List<DeviceGroup> deviceGroups = companyService.findDeviceGroupsByCompany(company);
+        return deviceGroups;
+    }
+
+    @GetMapping("/deviceGroupWithDeviceCount/{email}")
+    public List<DeviceGroupWithDeviceCountDTO> getDeviceGroupsWithDeviceCountByCompany(@PathVariable String  email){
+        Company companyForLoggedInUser = companyService.getCompanyForLoggedInUser(email);
+        Company company = companyService.getCompanyById(companyForLoggedInUser.getId());
+        List<DeviceGroupWithDeviceCountDTO> deviceGroups = companyService.getDeviceGroupsWithDeviceCountByCompany(company);
         return deviceGroups;
     }
     @GetMapping("/client/{email}")

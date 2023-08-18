@@ -5,6 +5,7 @@ import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.entity.DeviceGroup;
 import org.numo.dto.company.CompanyToSave;
+import org.numo.dto.company.DeviceGroupWithDeviceCountDTO;
 import org.numo.dto.company.DeviceToCompany;
 import org.numo.dto.device.DeviceToSend;
 
@@ -23,6 +24,8 @@ public interface CompanyService {
     Long countClientsByCompany(Company company);
     Long countDeviceGroupsByCompany(Company company);
     Long countCompany();
+
+    public List<DeviceGroupWithDeviceCountDTO> getDeviceGroupsWithDeviceCountByCompany(Company company);
 
 
  }

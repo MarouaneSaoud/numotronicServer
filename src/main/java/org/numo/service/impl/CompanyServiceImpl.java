@@ -7,6 +7,7 @@ import org.numo.dao.repository.CompanyRepository;
 import org.numo.dao.repository.DeviceGroupRepository;
 import org.numo.dao.repository.DeviceRepository;
 import org.numo.dto.company.CompanyToSave;
+import org.numo.dto.company.DeviceGroupWithDeviceCountDTO;
 import org.numo.dto.device.DeviceToSend;
 import org.numo.dto.device.DevicesFromAPI;
 import org.numo.error.BusinessException;
@@ -186,7 +187,12 @@ public class CompanyServiceImpl implements CompanyService {
         return companyRepository.count();
     }
 
-
+    public List<DeviceGroupWithDeviceCountDTO> getDeviceGroupsWithDeviceCountByCompany(Company company) {
+        return companyRepository.findDeviceGroupsWithDeviceCountByCompany(company)
+                .stream()
+                .map(result -> new DeviceGroupWithDeviceCountDTO((DeviceGroup) result[0], (Long) result[1]))
+                .collect(Collectors.toList());
+    }
 
 
 }
