@@ -11,6 +11,8 @@ import org.numo.service.DeviceGroupService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +30,15 @@ public class DeviceGroupServiceImpl implements DeviceGroupService {
     @Override
     public DeviceGroup addDeviceGroup(DeviceGroupToSave deviceGroupToSave) {
         DeviceGroup deviceGroup = new DeviceGroup();
+        LocalTime currentTime = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedTime = currentTime.format(formatter);
         try {
 
-            Company company = companyService.getCompanyById(deviceGroupToSave.getCompany());
+            Company company = companyService.getCompanyForLoggedInUser(deviceGroupToSave.getEmail());
             if (company != null) {
                 deviceGroup.setCompany(company);
-                deviceGroup.setName(deviceGroupToSave.getName()+"-"+company.getName());
+                deviceGroup.setName(deviceGroupToSave.getName()+"-"+formattedTime+"-"+company.getName());
                 DeviceGroup save = deviceGroupRepository.save(deviceGroup);
                 return save;
             } else {

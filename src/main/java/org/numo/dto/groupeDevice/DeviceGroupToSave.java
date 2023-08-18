@@ -9,5 +9,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class DeviceGroupToSave {
     private String name;
-    private String company ;
+    private String email ;
 }
