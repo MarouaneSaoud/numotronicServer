@@ -19,4 +19,5 @@ public class DeviceToSend {
     private String configuration;
     private String company ;
     private String client ;
+    private String group;
 }
