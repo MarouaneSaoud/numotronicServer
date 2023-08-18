@@ -108,6 +108,9 @@ public class CompanyServiceImpl implements CompanyService {
                         if (deviceByImei.getCompany() != null) {
                             device.setCompany(deviceByImei.getCompany().getName());
                         }
+                        if (deviceByImei.getClient() != null) {
+                            device.setClient(deviceByImei.getClient().getName());
+                        }
                         CalculateDeviceStatus status = new CalculateDeviceStatus();
                         device.setStatusDevice(status.calculateDeviceStatus(devices.getLastSeen(), currentDateTime));
                         activeImies.add(devices.getIMEI());

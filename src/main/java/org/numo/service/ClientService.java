@@ -12,6 +12,7 @@ public interface ClientService {
     void deleteClient(String id);
     Long cout();
     List<Device> findDevicesByClientId (String id);
+    Client findById(String id);
 
 
 

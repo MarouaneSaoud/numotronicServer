@@ -3,6 +3,7 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.Device;
 
+import org.numo.dto.client.DeviceToClient;
 import org.numo.dto.company.DeviceToCompany;
 import org.numo.dto.device.DeviceToSave;
 import org.numo.dto.device.DeviceToSend;
@@ -65,4 +66,15 @@ public class DeviceController extends AbstractController {
     public boolean decommission(@PathVariable String imei){
         Boolean status = deviceService.decommissionDeviceToCompany(imei);
         return status;
-    }}
+    }
+    @PostMapping("/allocateDeviceToClient")
+    public  boolean allocateDeviceToClient(@RequestBody DeviceToClient deviceToClient){
+        Boolean status = deviceService.allocateDeviceToClient(deviceToClient);
+        return status;
+    }
+    @GetMapping("/decommissionDeviceToClient/{imei}")
+    public boolean decommissionDeviceToClient(@PathVariable String imei){
+        Boolean status = deviceService.decommissionDeviceToClient(imei);
+        return status;
+    }
+}

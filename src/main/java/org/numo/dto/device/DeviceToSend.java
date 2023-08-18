@@ -18,4 +18,5 @@ public class DeviceToSend {
     private String firmware;
     private String configuration;
     private String company ;
+    private String client ;
 }

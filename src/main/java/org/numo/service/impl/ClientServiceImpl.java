@@ -86,4 +86,9 @@ public class ClientServiceImpl implements ClientService  {
         List<Device> devicesById = clientRepository.findDevicesByClientId(id);
         return devicesById;
     }
+
+    @Override
+    public Client findById(String id) {
+        return clientRepository.findById(id).orElse(null);
+    }
 }

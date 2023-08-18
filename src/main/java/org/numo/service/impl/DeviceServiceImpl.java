@@ -1,11 +1,13 @@
 package org.numo.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.numo.dao.entity.Client;
 import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.entity.Reference;
 import org.numo.dao.repository.DeviceRepository;
 import org.numo.dao.repository.ReferenceRepository;
+import org.numo.dto.client.DeviceToClient;
 import org.numo.dto.company.DeviceToCompany;
 import org.numo.dto.device.DeviceToSave;
 import org.numo.dto.device.DeviceToSend;
@@ -16,6 +18,7 @@ import org.numo.functions.CalculateDeviceStatus;
 import org.numo.functions.GetDevice;
 import org.numo.functions.impl.GetDeviceFromApi;
 import org.numo.model.StatusDevice;
+import org.numo.service.ClientService;
 import org.numo.service.CompanyService;
 import org.numo.service.DeviceService;
 import org.springframework.stereotype.Service;
@@ -36,6 +39,7 @@ public class DeviceServiceImpl implements DeviceService {
     private final DeviceRepository deviceRepository;
     private final ReferenceRepository referenceRepository;
     private final CompanyService companyService;
+    private final ClientService clientService;
 
 
     @Override
@@ -141,9 +145,33 @@ public class DeviceServiceImpl implements DeviceService {
         else {
             device.setCompany(null);
             device.setDeviceGroup(null);
+            device.setClient(null);
             deviceRepository.save(device);
             return true;
         }
 
+    }
+
+    @Override
+    public Boolean allocateDeviceToClient(DeviceToClient deviceToClient) {
+        Client client = clientService.findById(deviceToClient.getClient());
+        Device device = deviceRepository.findDeviceByImei(deviceToClient.getImei());
+        if(client==null || device==null)throw new BusinessException("Error");
+        else {
+            device.setClient(client);
+            deviceRepository.save(device);
+            return true;
+        }
+    }
+
+    @Override
+    public Boolean decommissionDeviceToClient(String imei) {
+        Device device = deviceRepository.findDeviceByImei(imei);
+        if(device==null)throw new BusinessException("Error");
+        else {
+            device.setClient(null);
+            deviceRepository.save(device);
+            return true;
+        }
     }
 }
