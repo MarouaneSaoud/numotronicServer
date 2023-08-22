@@ -7,6 +7,7 @@ import org.numo.dto.client.DeviceToClient;
 import org.numo.dto.company.DeviceToCompany;
 import org.numo.dto.device.DeviceToSave;
 import org.numo.dto.device.DeviceToSend;
+import org.numo.dto.groupeDevice.DeviceToGroup;
 import org.numo.service.DeviceService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,6 +76,15 @@ public class DeviceController extends AbstractController {
     @GetMapping("/decommissionDeviceToClient/{imei}")
     public boolean decommissionDeviceToClient(@PathVariable String imei){
         Boolean status = deviceService.decommissionDeviceToClient(imei);
+        return status;
+    }
+    @PostMapping("/allocateDeviceToGroup")
+    public boolean allocateDeviceToGroup(@RequestBody DeviceToGroup deviceToGroup){
+        return deviceService.allocateDeviceToGroup(deviceToGroup);
+    }
+    @GetMapping("/removeDeviceFromGroup/{imei}")
+    public boolean removeDeviceFromGroup(@PathVariable String imei){
+        Boolean status = deviceService.removeDeviceFromGroup(imei);
         return status;
     }
 }

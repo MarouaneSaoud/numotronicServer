@@ -1,10 +1,7 @@
 package org.numo.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.numo.dao.entity.Client;
-import org.numo.dao.entity.Company;
-import org.numo.dao.entity.Device;
-import org.numo.dao.entity.Reference;
+import org.numo.dao.entity.*;
 import org.numo.dao.repository.DeviceRepository;
 import org.numo.dao.repository.ReferenceRepository;
 import org.numo.dto.client.DeviceToClient;
@@ -12,6 +9,7 @@ import org.numo.dto.company.DeviceToCompany;
 import org.numo.dto.device.DeviceToSave;
 import org.numo.dto.device.DeviceToSend;
 import org.numo.dto.device.DevicesFromAPI;
+import org.numo.dto.groupeDevice.DeviceToGroup;
 import org.numo.error.BusinessException;
 import org.numo.error.TechnicalException;
 import org.numo.functions.CalculateDeviceStatus;
@@ -20,6 +18,7 @@ import org.numo.functions.impl.GetDeviceFromApi;
 import org.numo.model.StatusDevice;
 import org.numo.service.ClientService;
 import org.numo.service.CompanyService;
+import org.numo.service.DeviceGroupService;
 import org.numo.service.DeviceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +39,7 @@ public class DeviceServiceImpl implements DeviceService {
     private final ReferenceRepository referenceRepository;
     private final CompanyService companyService;
     private final ClientService clientService;
+    private final DeviceGroupService deviceGroupService;
 
 
     @Override
@@ -170,6 +170,29 @@ public class DeviceServiceImpl implements DeviceService {
         if(device==null)throw new BusinessException("Error");
         else {
             device.setClient(null);
+            deviceRepository.save(device);
+            return true;
+        }
+    }
+
+    @Override
+    public Boolean allocateDeviceToGroup(DeviceToGroup deviceToGroup) {
+        Device device= deviceRepository.findDeviceByImei(deviceToGroup.getImei());
+        DeviceGroup deviceGroup= deviceGroupService.findDeviceGroupById(device.getId());
+        if(device==null)throw new BusinessException("Error");
+        else{
+            device.setDeviceGroup(deviceGroup);
+            deviceRepository.save(device);
+            return true;
+        }
+
+    }
+    @Override
+    public Boolean removeDeviceFromGroup(String imei) {
+        Device device = deviceRepository.findDeviceByImei(imei);
+        if(device==null)throw new BusinessException("Error");
+        else {
+            device.setDeviceGroup(null);
             deviceRepository.save(device);
             return true;
         }

@@ -12,4 +12,5 @@ public interface DeviceGroupService {
     void delete(Long id);
     List<DeviceGroup> findDeviceGroupsWithoutDevices();
     Long count();
+    DeviceGroup deviceGroup(long id);
 }
