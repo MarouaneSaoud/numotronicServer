@@ -43,7 +43,6 @@ public class Device {
     @JoinColumn(name = "device_group_id")
     private DeviceGroup deviceGroup;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "client_id")
     private Client client;
