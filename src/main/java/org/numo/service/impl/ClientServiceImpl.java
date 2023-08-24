@@ -74,11 +74,18 @@ public class ClientServiceImpl implements ClientService  {
 
     @Override
     public void deleteClient(String id) {
-        clientRepository.deleteById(id);
+        Client client = clientRepository.findById(id).orElse(null);
+        List<Device> devicesByClientId = findDevicesByClientId(id);
+        if(client!=null){
+            accountService.delete(client.getAccount().getId());
+            client.setCompany(null);
+            for(Device d : devicesByClientId) d.setClient(null);
+            clientRepository.deleteById(id);
+        }
     }
 
     @Override
-    public Long cout() {
+    public Long count() {
         return clientRepository.count();
     }
     @Override

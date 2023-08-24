@@ -41,7 +41,7 @@ public class ClientController {
     }
     @GetMapping("/count")
     public Long count(){
-        return clientService.cout();
+        return clientService.count();
     }
     @GetMapping("/findDevicesById/{id}")
     public List<Device> findDevicesById(@PathVariable String id){

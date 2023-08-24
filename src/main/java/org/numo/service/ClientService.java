@@ -10,7 +10,7 @@ public interface ClientService {
     List<Client> clientList();
     Client addClient (ClientToSave client);
     void deleteClient(String id);
-    Long cout();
+    Long count();
     List<Device> findDevicesByClientId (String id);
     Client findById(String id);
 
