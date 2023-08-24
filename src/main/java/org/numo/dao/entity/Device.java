@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.util.Date;
 
 @Data
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

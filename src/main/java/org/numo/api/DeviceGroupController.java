@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.DeviceGroup;
 
+import org.numo.dto.device.DeviceDto;
+import org.numo.dto.device.DeviceToSend;
 import org.numo.dto.groupeDevice.DeviceGroupToSave;
 import org.numo.service.DeviceGroupService;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,6 @@ public class DeviceGroupController {
         DeviceGroup deviceGroup = deviceGroupService.addDeviceGroup(deviceGroupToSave);
         return deviceGroup;
     }
-
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id){
         deviceGroupService.delete(id);
@@ -43,6 +44,11 @@ public class DeviceGroupController {
     public List<DeviceGroup> findDeviceGroupsWithoutDevices(){
         List<DeviceGroup> deviceGroupsWithoutDevices = deviceGroupService.findDeviceGroupsWithoutDevices();
         return deviceGroupsWithoutDevices;
+    }
+    @GetMapping("/devicesFromGroup/{id}")
+    public List<DeviceToSend> devicesFromGroup(@PathVariable Long id){
+        List<DeviceToSend> deviceToSends = deviceGroupService.devicesFromGroup(id);
+        return deviceToSends;
     }
     @GetMapping("/count")
     public Long count(){

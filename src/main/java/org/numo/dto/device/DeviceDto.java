@@ -1,8 +1,7 @@
 package org.numo.dto.device;
 
 import lombok.Data;
-import org.numo.dto.company.CompanyDto;
-import org.numo.dto.groupeDevice.DeviceGroupDto;
+import org.numo.dao.entity.Reference;
 import org.numo.dto.reference.ReferenceDto;
 
 import java.util.Date;
@@ -14,7 +13,5 @@ public class DeviceDto {
     private String imei;
     private String description;
     private Date createdAt;
-    private ReferenceDto reference;
-    private CompanyDto company;
-    private DeviceGroupDto deviceGroup;
+    private Reference reference;
 }

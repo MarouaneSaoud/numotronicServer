@@ -78,13 +78,14 @@ public class DeviceController extends AbstractController {
         Boolean status = deviceService.decommissionDeviceToClient(imei);
         return status;
     }
-    @PostMapping("/allocateDeviceToGroup")
-    public boolean allocateDeviceToGroup(@RequestBody DeviceToGroup deviceToGroup){
-        return deviceService.allocateDeviceToGroup(deviceToGroup);
-    }
     @GetMapping("/removeDeviceFromGroup/{imei}")
     public boolean removeDeviceFromGroup(@PathVariable String imei){
         Boolean status = deviceService.removeDeviceFromGroup(imei);
         return status;
     }
+    @PostMapping("/allocateDeviceToGroup")
+    public boolean allocateDeviceToGroup(@RequestBody DeviceToGroup deviceToGroup){
+        return deviceService.allocateDeviceToGroup(deviceToGroup);
+    }
+
 }
