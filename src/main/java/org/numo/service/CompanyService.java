@@ -4,9 +4,7 @@ import org.numo.dao.entity.Client;
 import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.entity.DeviceGroup;
-import org.numo.dto.company.CompanyToSave;
-import org.numo.dto.company.DeviceGroupWithDeviceCountDTO;
-import org.numo.dto.company.DeviceToCompany;
+import org.numo.dto.company.*;
 import org.numo.dto.device.DeviceToSend;
 
 import java.util.List;
@@ -24,8 +22,9 @@ public interface CompanyService {
     Long countClientsByCompany(Company company);
     Long countDeviceGroupsByCompany(Company company);
     Long countCompany();
-
-    public List<DeviceGroupWithDeviceCountDTO> getDeviceGroupsWithDeviceCountByCompany(Company company);
+    List<DeviceGroupWithDeviceCountDTO> getDeviceGroupsWithDeviceCountByCompany(Company company);
+    CompanyDeviceAllocatePercentage percentageOfAffectedDevices(Company company);
+    CompanyStatistic companyStatistic(Company company);
 
 
  }

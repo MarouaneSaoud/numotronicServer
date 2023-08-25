@@ -6,6 +6,8 @@ import org.numo.dao.entity.Client;
 import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.entity.DeviceGroup;
+import org.numo.dto.company.CompanyDeviceAllocatePercentage;
+import org.numo.dto.company.CompanyStatistic;
 import org.numo.dto.company.CompanyToSave;
 import org.numo.dto.company.DeviceGroupWithDeviceCountDTO;
 import org.numo.dto.device.DeviceToSend;
@@ -103,4 +105,15 @@ public class CompanyController {
         Long countClients = companyService.countCompany();
         return countClients;
     }
+    @GetMapping ("/percentageAllocatedDevices/{email}")
+    public CompanyDeviceAllocatePercentage percentage(@PathVariable String email){
+        Company company = companyService.getCompanyForLoggedInUser(email);
+        return companyService.percentageOfAffectedDevices(company);
+    }
+    @GetMapping ("/companyStatistic/{email}")
+    public CompanyStatistic companyStatistic(@PathVariable String email){
+        Company company = companyService.getCompanyForLoggedInUser(email);
+        return companyService.companyStatistic(company);
+    }
+
 }

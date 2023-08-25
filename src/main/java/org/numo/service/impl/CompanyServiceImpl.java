@@ -6,6 +6,8 @@ import org.numo.dao.repository.ClientRepository;
 import org.numo.dao.repository.CompanyRepository;
 import org.numo.dao.repository.DeviceGroupRepository;
 import org.numo.dao.repository.DeviceRepository;
+import org.numo.dto.company.CompanyDeviceAllocatePercentage;
+import org.numo.dto.company.CompanyStatistic;
 import org.numo.dto.company.CompanyToSave;
 import org.numo.dto.company.DeviceGroupWithDeviceCountDTO;
 import org.numo.dto.device.DeviceToSend;
@@ -18,7 +20,6 @@ import org.numo.functions.GetDevice;
 import org.numo.functions.impl.GetDeviceFromApi;
 import org.numo.service.AccountService;
 import org.numo.service.CompanyService;
-import org.numo.service.DeviceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -195,6 +196,45 @@ public class CompanyServiceImpl implements CompanyService {
                 .stream()
                 .map(result -> new DeviceGroupWithDeviceCountDTO((DeviceGroup) result[0], (Long) result[1]))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public CompanyDeviceAllocatePercentage percentageOfAffectedDevices(Company company) {
+        List<Device> devices = company.getDevices();
+        double affected =0;
+        double NotAffected =0;
+
+        for(Device d : devices){
+            if(d.getClient()==null){
+                NotAffected++;
+            }else {
+                affected++;
+            }
+        }
+        CompanyDeviceAllocatePercentage percentage = new CompanyDeviceAllocatePercentage();
+        if(affected ==0 && NotAffected==0){
+            percentage.setAffected(0.0)  ;
+            percentage.setNotAffected(0.0);
+        }
+        else {
+        percentage.setAffected((affected/(affected+NotAffected))*100)  ;
+        percentage.setNotAffected((NotAffected/(affected+NotAffected))*100);
+        }
+        return percentage;
+    }
+
+    @Override
+    public CompanyStatistic companyStatistic(Company company) {
+        CompanyStatistic companyStatistic = new CompanyStatistic();
+        List<Client> clients = company.getClients();
+        List<DeviceGroup> deviceGroups = company.getDeviceGroups();
+        List<Device> devices = company.getDevices();
+        companyStatistic.setClient(clients.isEmpty() ? 0 : clients.size() + 1);
+        companyStatistic.setGroup(deviceGroups.isEmpty() ? 0 : deviceGroups.size() + 1);
+        companyStatistic.setDevice(devices.isEmpty() ? 0 : devices.size() + 1);
+
+
+        return companyStatistic;
     }
 
 

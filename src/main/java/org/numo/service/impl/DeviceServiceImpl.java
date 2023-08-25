@@ -178,7 +178,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Override
     public Boolean allocateDeviceToGroup(DeviceToGroup deviceToGroup) {
         Device device= deviceRepository.findDeviceByImei(deviceToGroup.getImei());
-        DeviceGroup deviceGroup= deviceGroupService.findDeviceGroupById(1L);
+        DeviceGroup deviceGroup= deviceGroupService.findDeviceGroupById(deviceToGroup.getGroup());
         if(device==null || deviceGroup==null  ){throw new BusinessException("Error");}
         else{
             device.setDeviceGroup(deviceGroup);
