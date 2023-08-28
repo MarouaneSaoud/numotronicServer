@@ -43,7 +43,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 
             responseList.add(response);
         }
-
         return responseList;
     }
 
