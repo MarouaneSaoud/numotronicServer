@@ -16,7 +16,7 @@ public class GetDeviceFromApi implements GetDevice {
     @Override
     public List<DevicesFromAPI> AllDevices(){
         RestTemplate restTemplate = new RestTemplate();
-        String apiUrl = "http://41.250.107.227:3000/devices";
+        String apiUrl = "http://160.179.40.217:3000/devices";
         ResponseEntity<Map<String, Object>> responseEntity = restTemplate.exchange(apiUrl, HttpMethod.GET, null, new ParameterizedTypeReference<Map<String, Object>>() {});
         Map<String, Object> responseBody = responseEntity.getBody();
 

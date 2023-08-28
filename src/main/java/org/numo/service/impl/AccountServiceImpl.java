@@ -95,4 +95,9 @@ public class AccountServiceImpl implements AccountService {
     public void delete(Long id) {
         appUserRepository.deleteById(id);
     }
+
+    @Override
+    public long count() {
+        return appUserRepository.count();
+    }
 }
