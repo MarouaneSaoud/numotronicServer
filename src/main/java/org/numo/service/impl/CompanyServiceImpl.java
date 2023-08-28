@@ -237,5 +237,10 @@ public class CompanyServiceImpl implements CompanyService {
         return companyStatistic;
     }
 
+    @Override
+    public List<Company> getTop5CompaniesByDeviceCount() {
+        return companyRepository.findTop5CompaniesByDeviceCount();
+    }
+
 
 }

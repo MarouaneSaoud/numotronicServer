@@ -25,6 +25,6 @@ public interface CompanyService {
     List<DeviceGroupWithDeviceCountDTO> getDeviceGroupsWithDeviceCountByCompany(Company company);
     CompanyDeviceAllocatePercentage percentageOfAffectedDevices(Company company);
     CompanyStatistic companyStatistic(Company company);
-
+    List<Company> getTop5CompaniesByDeviceCount();
 
  }

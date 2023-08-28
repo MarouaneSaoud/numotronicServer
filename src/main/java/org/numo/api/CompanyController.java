@@ -115,5 +115,8 @@ public class CompanyController {
         Company company = companyService.getCompanyForLoggedInUser(email);
         return companyService.companyStatistic(company);
     }
-
+    @GetMapping("/topcompanies")
+    public List<Company> getTopCompanies() {
+        return companyService.getTop5CompaniesByDeviceCount();
+    }
 }
