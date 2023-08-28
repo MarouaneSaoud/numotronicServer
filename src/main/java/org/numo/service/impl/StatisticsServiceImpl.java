@@ -53,7 +53,7 @@ private Date getNineMonthsAgoDate() {
         return Date.from(nineMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
     private String getMonthInLetters(int monthNumber) {
-        DateFormatSymbols symbols = new DateFormatSymbols(Locale.getDefault());
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.ENGLISH);
         return symbols.getMonths()[monthNumber - 1];
     }
 }
