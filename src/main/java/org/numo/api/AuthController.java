@@ -88,6 +88,10 @@ public class AuthController extends AbstractController {
     public Boolean unableUser(@PathVariable Long id){
         return accountService.UnableUser(id);
     }
+    @GetMapping("/count")
+    public long count(){
+        return accountService.count();
+    }
 }
 
 
