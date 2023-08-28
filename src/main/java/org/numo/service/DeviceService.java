@@ -7,6 +7,7 @@ import org.numo.dto.device.DeviceToSave;
 import org.numo.dto.device.DeviceToSend;
 import org.numo.dto.groupeDevice.DeviceToGroup;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DeviceService {
@@ -23,4 +24,6 @@ public interface DeviceService {
     Boolean decommissionDeviceToClient(String imei);
     Boolean allocateDeviceToGroup(DeviceToGroup deviceToGroup);
     Boolean removeDeviceFromGroup(String imei);
+
+
 }
