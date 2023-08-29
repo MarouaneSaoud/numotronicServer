@@ -92,6 +92,10 @@ public class AuthController extends AbstractController {
     public long count(){
         return accountService.count();
     }
+    @GetMapping("/delete/{id}")
+    public void delete(Long id){
+        accountService.delete(id);
+    }
 }
 
 

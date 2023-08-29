@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface CompanyRepository extends JpaRepository<Company,String> {
@@ -25,6 +26,16 @@ public interface CompanyRepository extends JpaRepository<Company,String> {
     List<Object[]> findDeviceGroupsWithDeviceCountByCompany(@Param("company") Company company);
     @Query("SELECT c FROM Company c LEFT JOIN FETCH c.devices d GROUP BY c.id ORDER BY COUNT(d) DESC")
     List<Company> findTop5CompaniesByDeviceCount();
+    @Query("SELECT c.createdAt AS createdAt, COUNT(d) AS deviceCount, COUNT(cl) AS clientCount " +
+            "FROM Company c " +
+            "LEFT JOIN c.devices d " +
+            "LEFT JOIN c.clients cl " +
+            "WHERE c.id = :companyId AND c.createdAt >= :startDate " +
+            "GROUP BY c.createdAt " +
+            "ORDER BY c.createdAt DESC")
+    List<Object[]> getDeviceAndClientCountsForCompanyAndMonths(
+            @Param("companyId") String companyId,
+            @Param("startDate") Date startDate);
 
 
 }

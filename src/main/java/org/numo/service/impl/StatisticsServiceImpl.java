@@ -1,6 +1,9 @@
 package org.numo.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.numo.dao.CompanyStatistic;
+import org.numo.dao.entity.Company;
+import org.numo.dao.repository.CompanyRepository;
 import org.numo.dao.repository.DeviceRepository;
 import org.numo.dto.StatisticsResponse;
 import org.numo.service.StatisticsService;
@@ -10,19 +13,17 @@ import javax.annotation.PostConstruct;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class StatisticsServiceImpl implements StatisticsService {
     private final DeviceRepository deviceRepository;
+    private final CompanyRepository companyRepository;
 
 
     @Override
-    public List<StatisticsResponse> getStatistics() {
+    public List<StatisticsResponse> getStatisticsForAdmin() {
         Date nineMonthsAgo = getNineMonthsAgoDate();
         List<Object[]> results = deviceRepository.getStatistics(nineMonthsAgo);
 
@@ -46,7 +47,32 @@ public class StatisticsServiceImpl implements StatisticsService {
         return responseList;
     }
 
-private Date getNineMonthsAgoDate() {
+    @Override
+    public List<CompanyStatistic> getDeviceAndClientCountsForCompanyAndPreviousMonths(String email) {
+        Date startDate = getNineMonthsAgoDate();
+        Company company = companyRepository.findByAccount_Username(email);
+
+        List<Object[]> results = companyRepository.getDeviceAndClientCountsForCompanyAndMonths(company.getId(), startDate);
+
+        List<CompanyStatistic> dtos = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Date createdAt = (Date) result[0];
+            int deviceCount = ((Number) result[1]).intValue();
+            int clientCount = ((Number) result[2]).intValue();
+
+            CompanyStatistic dto = new CompanyStatistic();
+            dto.setMonthName(getMonthInLetters(createdAt.getMonth() + 1));
+            dto.setDeviceCount(deviceCount);
+            dto.setClientCount(clientCount);
+
+            dtos.add(dto);
+        }
+
+        return dtos;
+    }
+
+    private Date getNineMonthsAgoDate() {
         LocalDate currentDate = LocalDate.now();
         LocalDate nineMonthsAgo = currentDate.minusMonths(9);
         return Date.from(nineMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
