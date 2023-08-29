@@ -239,7 +239,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<Company> getTop5CompaniesByDeviceCount() {
-        return companyRepository.findTop5CompaniesByDeviceCount();
+        List<Company> top5CompaniesByDeviceCount = companyRepository.findTop5CompaniesByDeviceCount();
+        return top5CompaniesByDeviceCount.subList(0, Math.min(top5CompaniesByDeviceCount.size(), 5));
     }
 
 
