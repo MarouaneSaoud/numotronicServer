@@ -40,9 +40,9 @@ public class DeviceController extends AbstractController {
         return d;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Long id){
-        deviceService.delete(id);
+    @DeleteMapping("/delete/{imei}")
+    public void delete(@PathVariable String imei){
+        deviceService.delete(imei);
     }
 
     @GetMapping("/{imei}")
@@ -87,5 +87,6 @@ public class DeviceController extends AbstractController {
     public boolean allocateDeviceToGroup(@RequestBody DeviceToGroup deviceToGroup){
         return deviceService.allocateDeviceToGroup(deviceToGroup);
     }
+
 
 }

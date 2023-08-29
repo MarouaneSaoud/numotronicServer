@@ -106,8 +106,15 @@ public class DeviceServiceImpl implements DeviceService {
     }
 
     @Override
-    public void delete(Long id) {
-        deviceRepository.deleteById(id);
+    public void delete(String imei) {
+        Device device = deviceRepository.findDeviceByImei(imei);
+        if(device==null)throw new BusinessException("Device Not Found");
+        else{
+            device.setCompany(null);
+            device.setDeviceGroup(null);
+            device.setClient(null);
+            deviceRepository.delete(device);
+        }
     }
 
     @Override

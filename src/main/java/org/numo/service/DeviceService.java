@@ -13,7 +13,7 @@ import java.util.List;
 public interface DeviceService {
     List<DeviceToSend> devicelist();
     Device addDevice(DeviceToSave deviceToSave);
-    void delete(Long id);
+    void delete(String imei);
     Device findDeviceByImei(String imei);
     Long countDevices ();
     List<Device> findDevicesWithoutCompany();
