@@ -15,6 +15,9 @@ public interface CompanyService {
     List<DeviceToSend> findDevicesByCompany(Company company);
     List<DeviceGroup> findDeviceGroupsByCompany(Company company);
     List<Client> findClientsByCompany(Company company);
+
+    List<DeviceGroup> findDeviceGroupsByIdCompany(String id);
+    List<Client> findClientsByIdCompany(String id);
     void delete(String id);
     Company getCompanyForLoggedInUser(String email);
     Company getCompanyById(String id);

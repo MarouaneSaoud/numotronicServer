@@ -119,4 +119,12 @@ public class CompanyController {
     public List<Company> getTopCompanies() {
         return companyService.getTop5CompaniesByDeviceCount();
     }
+    @GetMapping ("/findDeviceGroupsByIdCompany/{id}")
+    public List<DeviceGroup> findDeviceGroupsByIdCompany(@PathVariable String id){
+        return companyService.findDeviceGroupsByIdCompany(id);
+    }
+    @GetMapping ("/findClientByIdCompany/{id}")
+    public List<Client> findClientsByIdCompany(@PathVariable String id){
+        return companyService.findClientsByIdCompany(id);
+    }
 }

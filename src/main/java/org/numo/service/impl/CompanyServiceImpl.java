@@ -137,6 +137,21 @@ public class CompanyServiceImpl implements CompanyService {
         List<Client> clientsByCompany = companyRepository.findClientsByCompany(company);
         return clientsByCompany;
     }
+
+    @Override
+    public List<DeviceGroup> findDeviceGroupsByIdCompany(String id) {
+        Company company = companyRepository.findById(id).orElse(null);
+        List<DeviceGroup> deviceGroupsByCompany = companyRepository.findDeviceGroupsByCompany(company);
+        return deviceGroupsByCompany;
+    }
+
+    @Override
+    public List<Client> findClientsByIdCompany(String id) {
+        Company company = companyRepository.findById(id).orElse(null);
+        List<Client> clients = companyRepository.findClientsByCompany(company);
+        return clients;
+    }
+
     @Override
     public void delete(String id) {
         Company company= companyRepository.findById(id).orElse(null);
