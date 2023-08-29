@@ -15,20 +15,20 @@ public interface DeviceRepository extends JpaRepository<Device, Long> {
     @Query("SELECT d FROM Device d WHERE d.company IS NULL")
     List<Device> findDevicesWithoutCompany();
 
-
     @Query("SELECT " +
-            "    MONTH(c.createdAt) AS month, " +
-            "    COUNT(DISTINCT c) AS clientCount, " +
-            "    COUNT(DISTINCT d) AS deviceCount, " +
-            "    COUNT(DISTINCT co) AS companyCount " +
+            "    MONTH(d.createdAt) AS month, " +
+            "    (SELECT COUNT(c) FROM Client c WHERE MONTH(c.createdAt) = MONTH(d.createdAt) AND c.createdAt >= :nineMonthsAgo) AS clientCount, " +
+            "    (SELECT COUNT(dev) FROM Device dev WHERE MONTH(dev.createdAt) = MONTH(d.createdAt) AND dev.createdAt >= :nineMonthsAgo) AS deviceCount, " +
+            "    (SELECT COUNT(co) FROM Company co WHERE MONTH(co.createdAt) = MONTH(d.createdAt) AND co.createdAt >= :nineMonthsAgo) AS companyCount " +
             "FROM " +
-            "    Client c, Device d, Company co " +
+            "    Device d " +
             "WHERE " +
-            "    c.createdAt >= :nineMonthsAgo AND " +
-            "    d.createdAt >= :nineMonthsAgo AND " +
-            "    co.createdAt >= :nineMonthsAgo " +
+            "    d.createdAt >= :nineMonthsAgo " +
             "GROUP BY " +
-            "    MONTH(c.createdAt)")
+            "    MONTH(d.createdAt)")
     List<Object[]> getStatistics(Date nineMonthsAgo);
+
+
+
 
 }
