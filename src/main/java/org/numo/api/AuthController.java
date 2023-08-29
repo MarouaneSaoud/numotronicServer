@@ -93,7 +93,7 @@ public class AuthController extends AbstractController {
         return accountService.count();
     }
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable  Long id){
+    public void delete(@PathVariable Long id){
         accountService.delete(id);
     }
 }
