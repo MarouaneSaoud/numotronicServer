@@ -2,6 +2,7 @@ package org.numo.api;
 
 import lombok.AllArgsConstructor;
 import org.numo.dao.CompanyStatistic;
+import org.numo.dto.DeviceStatistic;
 import org.numo.dto.StatisticsResponse;
 import org.numo.service.StatisticsService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,5 +25,9 @@ public class StatisticsController {
     @GetMapping("/statisticManager/{email}")
     public List<CompanyStatistic> getLastNineMonthsStatistics(@PathVariable String email) {
         return statisticsService.getDeviceAndClientCountsForCompanyAndPreviousMonths(email);
+    }
+    @GetMapping("/statisticDevices")
+    public DeviceStatistic deviceStatistic() {
+        return statisticsService.deviceStatistic();
     }
 }

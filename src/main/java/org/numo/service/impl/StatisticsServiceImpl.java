@@ -5,7 +5,11 @@ import org.numo.dao.CompanyStatistic;
 import org.numo.dao.entity.Company;
 import org.numo.dao.repository.CompanyRepository;
 import org.numo.dao.repository.DeviceRepository;
+import org.numo.dto.DeviceStatistic;
 import org.numo.dto.StatisticsResponse;
+import org.numo.dto.device.DeviceToSend;
+import org.numo.model.StatusDevice;
+import org.numo.service.DeviceService;
 import org.numo.service.StatisticsService;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,7 @@ import java.util.*;
 @AllArgsConstructor
 public class StatisticsServiceImpl implements StatisticsService {
     private final DeviceRepository deviceRepository;
+    private final DeviceService deviceService;
     private final CompanyRepository companyRepository;
 
 
@@ -70,6 +75,35 @@ public class StatisticsServiceImpl implements StatisticsService {
         }
 
         return dtos;
+    }
+
+    @Override
+    public DeviceStatistic deviceStatistic() {
+        DeviceStatistic deviceStatistic= new DeviceStatistic();
+        List<DeviceToSend> devicelist = deviceService.devicelist();
+
+        if(devicelist.isEmpty()){
+            deviceStatistic.setTotal(0);
+            deviceStatistic.setInactive(0);
+            deviceStatistic.setActive(0);
+            deviceStatistic.setOffline(0);
+            return deviceStatistic;
+        }else{
+                int total =0;
+                double active =0;
+                double inactive=0;
+                double offline=0;
+                 total = devicelist.size();
+                 active = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.ONLINE).count();
+                 inactive = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.INACTIF).count();
+                 offline = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.OFFLINE).count();
+
+                deviceStatistic.setTotal(total);
+                deviceStatistic.setInactive( inactive / total * 100);
+                deviceStatistic.setActive(active / total * 100);
+                deviceStatistic.setOffline( offline / total * 100);
+                return deviceStatistic;
+        }
     }
 
     private Date getNineMonthsAgoDate() {
