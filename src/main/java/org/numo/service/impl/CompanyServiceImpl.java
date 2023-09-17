@@ -244,9 +244,9 @@ public class CompanyServiceImpl implements CompanyService {
         List<Client> clients = company.getClients();
         List<DeviceGroup> deviceGroups = company.getDeviceGroups();
         List<Device> devices = company.getDevices();
-        companyStatistic.setClient(clients.isEmpty() ? 0 : clients.size() + 1);
-        companyStatistic.setGroup(deviceGroups.isEmpty() ? 0 : deviceGroups.size() + 1);
-        companyStatistic.setDevice(devices.isEmpty() ? 0 : devices.size() + 1);
+        companyStatistic.setClient(clients.isEmpty() ? 0 : clients.size());
+        companyStatistic.setGroup(deviceGroups.isEmpty() ? 0 : deviceGroups.size());
+        companyStatistic.setDevice(devices.isEmpty() ? 0 : devices.size());
 
 
         return companyStatistic;

@@ -28,7 +28,6 @@ public class JWTAuthorizationFiler extends OncePerRequestFilter {
        if(autorizationToken!=null && autorizationToken.startsWith(SecurityParams.HEADER_PREFIX)){
             try {
                 String jwt =autorizationToken.substring(7);
-                System.out.println(jwt);
                 Algorithm algorithm=Algorithm.HMAC256(SecurityParams.SECRET);
                 JWTVerifier jwtVerifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT= jwtVerifier.verify(jwt);
