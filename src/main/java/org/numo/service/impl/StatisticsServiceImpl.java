@@ -112,7 +112,7 @@ public class StatisticsServiceImpl implements StatisticsService {
         return Date.from(nineMonthsAgo.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
     private String getMonthInLetters(int monthNumber) {
-        DateFormatSymbols symbols = new DateFormatSymbols(Locale.ENGLISH);
+        DateFormatSymbols symbols = new DateFormatSymbols(Locale.FRENCH);
         return symbols.getMonths()[monthNumber - 1];
     }
 }
