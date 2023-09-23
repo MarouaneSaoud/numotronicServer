@@ -93,16 +93,17 @@ public class StatisticsServiceImpl implements StatisticsService {
                 double active =0;
                 double inactive=0;
                 double offline=0;
-                 total = devicelist.size();
-                 active = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.ONLINE).count();
-                 inactive = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.INACTIF).count();
-                 offline = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.OFFLINE).count();
+                total = devicelist.size();
+                active = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.ONLINE).count();
+                inactive = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.INACTIF).count();
+                offline = devicelist.stream().filter(d -> d.getStatusDevice() == StatusDevice.OFFLINE).count();
 
                 deviceStatistic.setTotal(total);
-                deviceStatistic.setInactive( inactive / total * 100);
-                deviceStatistic.setActive(active / total * 100);
-                deviceStatistic.setOffline( offline / total * 100);
-                return deviceStatistic;
+            deviceStatistic.setInactive(Math.round((inactive / (double) total) * 100.0 * 100.0) / 100.0);
+            deviceStatistic.setActive(Math.round((active / (double) total) * 100.0 * 100.0) / 100.0);
+            deviceStatistic.setOffline(Math.round((offline / (double) total) * 100.0 * 100.0) / 100.0);
+
+            return deviceStatistic;
         }
     }
 
