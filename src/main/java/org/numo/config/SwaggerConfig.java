@@ -18,7 +18,7 @@ public class SwaggerConfig {
     public Docket apiDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("org.sid.api")) // Remplacez "com.example.controller" par le package de vos contrôleurs
+                .apis(RequestHandlerSelectors.basePackage("org.numo.api")) // Remplacez "com.example.controller" par le package de vos contrôleurs
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());

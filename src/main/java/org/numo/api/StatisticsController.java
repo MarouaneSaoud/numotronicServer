@@ -1,5 +1,6 @@
 package org.numo.api;
 
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.numo.dao.CompanyStatistic;
 import org.numo.dto.DeviceStatistic;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/statistics")
 @AllArgsConstructor
+@Api(tags = "statistics", description = "Endpoints to manage statistics")
 public class StatisticsController {
     private final StatisticsService statisticsService;
 
