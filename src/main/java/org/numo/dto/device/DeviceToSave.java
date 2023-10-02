@@ -10,7 +10,7 @@ import java.math.BigInteger;
 @Setter
 @AllArgsConstructor
 public class DeviceToSave {
-    private int serialNum;
+    private String serialNum;
     private String imei;
     private String description;
     private Long reference;

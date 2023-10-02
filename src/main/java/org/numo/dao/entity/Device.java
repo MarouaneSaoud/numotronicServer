@@ -21,7 +21,7 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private int serialNum;
+    private String serialNum;
 
     @Column(unique = true)
     @NotNull
