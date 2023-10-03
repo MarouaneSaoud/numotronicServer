@@ -54,9 +54,7 @@ public class ClientServiceImpl implements ClientService  {
                 client.setCin(clientToSave.getCin());
                 client.setCompany(company);
 
-                GenerateRandomPassword grp = new GenerateRandomPassword();
-                String mdp = grp.generateRandomPassword(8);
-                AppUser appUser = accountService.saveUser(clientToSave.getEmail(), clientToSave.getName(), mdp, mdp);
+                AppUser appUser = accountService.saveUser(clientToSave.getEmail(), clientToSave.getName(), clientToSave.getPassword(), clientToSave.getPassword());
                 accountService.addRoleToUser(appUser.getUsername(), "CLIENT");
                 client.setAccount(appUser);
 

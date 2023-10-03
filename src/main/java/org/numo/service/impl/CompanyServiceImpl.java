@@ -47,11 +47,7 @@ public class CompanyServiceImpl implements CompanyService {
         try {
 
             Company company=new Company();
-
-            GenerateRandomPassword grp= new GenerateRandomPassword();
-            String mdp = grp.generateRandomPassword(8);
-            System.out.println(mdp);
-            AppUser appUser = accountService.saveUser(companyToSave.getEmail(), companyToSave.getName(), mdp, mdp);
+            AppUser appUser = accountService.saveUser(companyToSave.getEmail(), companyToSave.getName(), companyToSave.getPassword(), companyToSave.getPassword());
 
             if (appUser==null) throw new BusinessException("User Not Created");
             else accountService.addRoleToUser(appUser.getUsername(), "MANAGER");
