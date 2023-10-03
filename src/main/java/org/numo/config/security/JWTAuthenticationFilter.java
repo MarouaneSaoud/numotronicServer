@@ -30,7 +30,6 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
       String username=request.getParameter("username");
       String password=request.getParameter("password");
         System.out.println(username);
-        System.out.println(password);
         UsernamePasswordAuthenticationToken authenticationToken = new
                 UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(authenticationToken);
