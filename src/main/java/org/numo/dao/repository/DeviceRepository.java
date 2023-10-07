@@ -15,18 +15,24 @@ public interface DeviceRepository extends JpaRepository<Device, Long> {
     @Query("SELECT d FROM Device d WHERE d.company IS NULL")
     List<Device> findDevicesWithoutCompany();
 
-    @Query("SELECT " +
-            "    MONTH(d.createdAt) AS month, " +
-            "    (SELECT COUNT(c) FROM Client c WHERE MONTH(c.createdAt) = MONTH(d.createdAt) AND c.createdAt >= :nineMonthsAgo) AS clientCount, " +
-            "    (SELECT COUNT(dev) FROM Device dev WHERE MONTH(dev.createdAt) = MONTH(d.createdAt) AND dev.createdAt >= :nineMonthsAgo) AS deviceCount, " +
-            "    (SELECT COUNT(co) FROM Company co WHERE MONTH(co.createdAt) = MONTH(d.createdAt) AND co.createdAt >= :nineMonthsAgo) AS companyCount " +
-            "FROM " +
-            "    Device d " +
-            "WHERE " +
-            "    d.createdAt >= :nineMonthsAgo " +
-            "GROUP BY " +
+    @Query("SELECT" +
+            "    MONTH(d.createdAt) AS month," +
+            "    COUNT(DISTINCT c.id) AS clientCount," +
+            "    COUNT(DISTINCT dev.id) AS deviceCount," +
+            "    COUNT(DISTINCT co.id) AS companyCount FROM" +
+            "    Device d\n" +
+            "LEFT JOIN" +
+            "    Client c ON MONTH(c.createdAt) = MONTH(d.createdAt) AND c.createdAt >= :nineMonthsAgo\n" +
+            "LEFT JOIN" +
+            "    Device dev ON MONTH(dev.createdAt) = MONTH(d.createdAt) AND dev.createdAt >= :nineMonthsAgo\n" +
+            "LEFT JOIN" +
+            "    Company co ON MONTH(co.createdAt) = MONTH(d.createdAt) AND co.createdAt >= :nineMonthsAgo\n" +
+            "WHERE" +
+            "    d.createdAt >= :nineMonthsAgo\n" +
+            "GROUP BY\n" +
             "    MONTH(d.createdAt)")
     List<Object[]> getStatistics(Date nineMonthsAgo);
+
 
 
 

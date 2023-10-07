@@ -27,19 +27,19 @@ import java.util.Optional;
 public class AuthController extends AbstractController {
     private final AccountService accountService;
 
-  /* @PostConstruct
+ /* @PostConstruct
     void init() {
         accountService.saveUser("rabie@numotronic.com", "rabie", "numoAdmin@12", "numoAdmin@12");
+        accountService.saveUser("redouane@numotronic.com", "rabie", "numoAdmin@12", "numoAdmin@12");
         accountService.saveUser("manager@numotronic.com", "manager", "numoAdmin@12", "numoAdmin@12");
         accountService.saveRole(new AppRole(null, "SUPER_ADMIN"));
         accountService.saveRole(new AppRole(null, "ADMIN"));
         accountService.saveRole(new AppRole(null, "MANAGER"));
         accountService.saveRole(new AppRole(null, "CLIENT"));
         accountService.addRoleToUser("rabie@numotronic.com", "SUPER_ADMIN");
+        accountService.addRoleToUser("redouane@numotronic.com", "SUPER_ADMIN");
         accountService.addRoleToUser("manager@numotronic.com", "MANAGER");
     }*/
-
-
     @GetMapping("/")
     public List<AppUser> users() {
         return accountService.allUser();

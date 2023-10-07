@@ -31,6 +31,7 @@ public class StatisticsServiceImpl implements StatisticsService {
     public List<StatisticsResponse> getStatisticsForAdmin() {
         Date nineMonthsAgo = getNineMonthsAgoDate();
         List<Object[]> results = deviceRepository.getStatistics(nineMonthsAgo);
+        System.out.println(results);
 
         List<StatisticsResponse> responseList = new ArrayList<>();
         for (Object[] result : results) {
