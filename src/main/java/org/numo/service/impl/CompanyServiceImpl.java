@@ -48,7 +48,6 @@ public class CompanyServiceImpl implements CompanyService {
 
             Company company=new Company();
             AppUser appUser = accountService.saveUser(companyToSave.getEmail(), companyToSave.getName(), companyToSave.getPassword(), companyToSave.getPassword());
-
             if (appUser==null) throw new BusinessException("User Not Created");
             else accountService.addRoleToUser(appUser.getUsername(), "MANAGER");
 

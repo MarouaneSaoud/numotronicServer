@@ -26,8 +26,8 @@ import java.util.Optional;
 
 public class AuthController extends AbstractController {
     private final AccountService accountService;
-
-  /* @PostConstruct
+/*
+  @PostConstruct
     void init() {
         accountService.saveUser("rabie@numotronic.com", "rabie", "numoAdmin@12", "numoAdmin@12");
         accountService.saveUser("manager@numotronic.com", "manager", "numoAdmin@12", "numoAdmin@12");
