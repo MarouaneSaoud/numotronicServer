@@ -52,30 +52,6 @@ public class StatisticsServiceImpl implements StatisticsService {
         return responseList;
     }
 
-    @Override
-    public List<CompanyStatistic> getDeviceAndClientCountsForCompanyAndPreviousMonths(String email) {
-        Date startDate = getNineMonthsAgoDate();
-        Company company = companyRepository.findByAccount_Username(email);
-
-        List<Object[]> results = companyRepository.getDeviceAndClientCountsForCompanyAndMonths(company.getId(), startDate);
-
-        List<CompanyStatistic> dtos = new ArrayList<>();
-
-        for (Object[] result : results) {
-            Date createdAt = (Date) result[0];
-            int deviceCount = ((Number) result[1]).intValue();
-            int clientCount = ((Number) result[2]).intValue();
-
-            CompanyStatistic dto = new CompanyStatistic();
-            dto.setMonthName(getMonthInLetters(createdAt.getMonth() + 1));
-            dto.setDeviceCount(deviceCount);
-            dto.setClientCount(clientCount);
-
-            dtos.add(dto);
-        }
-
-        return dtos;
-    }
 
     @Override
     public DeviceStatistic deviceStatistic() {
