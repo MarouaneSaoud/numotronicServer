@@ -24,18 +24,12 @@ public interface CompanyRepository extends JpaRepository<Company,String> {
     long countDeviceGroupsByCompany(Company company);
     @Query("SELECT dg, COUNT(dev) FROM DeviceGroup dg LEFT JOIN dg.devices dev WHERE dg.company = :company GROUP BY dg")
     List<Object[]> findDeviceGroupsWithDeviceCountByCompany(@Param("company") Company company);
-    @Query("SELECT c FROM Company c LEFT JOIN FETCH c.devices d GROUP BY c.id ORDER BY COUNT(d) DESC")
+    @Query("SELECT c FROM Company c " +
+            "JOIN Device d ON c.id = d.company.id " +
+            "GROUP BY c.id " +
+            "ORDER BY COUNT(d.id) DESC")
     List<Company> findTop5CompaniesByDeviceCount();
-    @Query("SELECT c.createdAt AS createdAt, COUNT(d) AS deviceCount, COUNT(cl) AS clientCount " +
-            "FROM Company c " +
-            "LEFT JOIN c.devices d " +
-            "LEFT JOIN c.clients cl " +
-            "WHERE c.id = :companyId AND c.createdAt >= :startDate " +
-            "GROUP BY c.createdAt " +
-            "ORDER BY c.createdAt DESC")
-    List<Object[]> getDeviceAndClientCountsForCompanyAndMonths(
-            @Param("companyId") String companyId,
-            @Param("startDate") Date startDate);
+
 
 
 }

@@ -24,10 +24,7 @@ public class StatisticsController {
     public List<StatisticsResponse> getLastNineMonthsStatistics() {
         return statisticsService.getStatisticsForAdmin();
     }
-    @GetMapping("/statisticManager/{email}")
-    public List<CompanyStatistic> getLastNineMonthsStatistics(@PathVariable String email) {
-        return statisticsService.getDeviceAndClientCountsForCompanyAndPreviousMonths(email);
-    }
+
     @GetMapping("/statisticDevices")
     public DeviceStatistic deviceStatistic() {
         return statisticsService.deviceStatistic();
