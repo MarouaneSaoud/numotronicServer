@@ -21,7 +21,7 @@ public class Company {
 
     private  String name;
     private String altName;
-    private String cin ;
+    private String cin_rc ;
 
     @CreationTimestamp
     private Date createdAt;
@@ -31,13 +31,12 @@ public class Company {
     private String department ;
     private String email;
     private String website;
+    private String tel ;
     private String skype ;
-    private int idrc ;
     private int idif;
     private int patent;
     private int cnss ;
     private String country;
-    private String logo;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToOne

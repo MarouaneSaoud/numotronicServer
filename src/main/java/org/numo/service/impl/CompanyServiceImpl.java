@@ -54,21 +54,29 @@ public class CompanyServiceImpl implements CompanyService {
                 company.setAccount(appUser);
                 company.setId(UUID.randomUUID().toString());
                 company.setName(companyToSave.getName());
+                company.setCin_rc(companyToSave.getCin_rc());
                 company.setAltName(companyToSave.getAltName());
-                company.setCin(companyToSave.getCin());
+                company.setTel(company.getTel());
+
                 company.setAddress(companyToSave.getAddress());
                 company.setPostalCode(companyToSave.getPostalCode());
+                company.setPostalCode(companyToSave.getPostalCode());
+
                 company.setDepartment(companyToSave.getDepartment());
                 company.setEmail(companyToSave.getEmail());
                 company.setWebsite(companyToSave.getWebsite());
                 company.setSkype(companyToSave.getSkype());
-                company.setIdrc(companyToSave.getIdrc());
-                company.setIdif(companyToSave.getIdif());
+                company.setIdif(companyToSave.getIdif() );
                 company.setPatent(companyToSave.getPatent());
-                company.setCnss(companyToSave.getCnss());
-                company.setCountry(companyToSave.getCountry());
-                company.setLogo(companyToSave.getLogo());
 
+                company.setCnss(companyToSave.getCnss());
+                company.setCnss(companyToSave.getCnss());
+
+                if (companyToSave.getCountry().equals("")) {
+                    company.setCountry("Morocco");
+                } else {
+                    company.setCountry(companyToSave.getCountry());
+                }
                 company.setDeviceGroups(new ArrayList<>());
                 company.setDevices(new ArrayList<>());
                 company.setClients(new ArrayList<>());

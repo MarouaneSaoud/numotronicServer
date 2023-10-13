@@ -10,18 +10,17 @@ public class CompanyToSave {
 
     private String name;
     private String altName;
-    private String cin;
+    private String cin_rc;
     private String address;
+    private String tel;
     private int postalCode;
     private String department;
     private String email;
     private String website;
     private String skype;
-    private int idrc;
     private int idif;
     private int patent;
     private int cnss;
     private String country;
-    private String logo;
     private String password ;
 }
