@@ -6,26 +6,34 @@ import org.numo.dao.entity.Client;
 import org.numo.dao.entity.Company;
 import org.numo.dao.entity.Device;
 import org.numo.dao.repository.ClientRepository;
+import org.numo.dao.repository.DeviceRepository;
 import org.numo.dto.client.ClientToSave;
+import org.numo.dto.device.DeviceToSend;
+import org.numo.dto.device.DevicesFromAPI;
 import org.numo.error.BusinessException;
 import org.numo.error.TechnicalException;
+import org.numo.functions.CalculateDeviceStatus;
 import org.numo.functions.GenerateRandomPassword;
+import org.numo.functions.GetDevice;
 import org.numo.service.AccountService;
 import org.numo.service.ClientService;
 import org.numo.service.CompanyService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class ClientServiceImpl implements ClientService  {
+public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
     private final CompanyService companyService;
     private final AccountService accountService;
+    private final GetDevice getDevice ;
+    private final DeviceRepository deviceRepository;
+
 
     @Override
     public List<Client> clientList() {
@@ -96,4 +104,55 @@ public class ClientServiceImpl implements ClientService  {
     public Client findById(String id) {
         return clientRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public List<DeviceToSend> findDevicesByClient(Client client) {
+        List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices();
+        Set<String> activeImies = new HashSet<>();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        List<DeviceToSend> listDevices = new ArrayList<>();
+
+        for (DevicesFromAPI devices : devicesFromAPI) {
+            List<Device> devicesByCompany = clientRepository.findDevicesByClient(client);
+
+            for (Device d : devicesByCompany) {
+                Device deviceByImei = deviceRepository.findDeviceByImei(d.getImei());
+                if (deviceByImei != null && devices.getIMEI().equals(d.getImei())) {
+                    DeviceToSend device = new DeviceToSend();
+                    device.setId(deviceByImei.getId());
+                    device.setImei(devices.getIMEI());
+                    device.setTime(devices.getLastSeen());
+                    device.setFirmware(devices.getFirware());
+                    device.setConfiguration(devices.getConfig());
+                    if (deviceByImei.getCompany() != null) {
+                        device.setCompany(deviceByImei.getCompany().getName());
+                    }
+                    if (deviceByImei.getClient() != null) {
+                        device.setClient(deviceByImei.getClient().getName());
+                    }
+
+                    device.setGroup(null);
+
+                    CalculateDeviceStatus status = new CalculateDeviceStatus();
+                    device.setStatusDevice(status.calculateDeviceStatus(devices.getLastSeen(), currentDateTime));
+                    activeImies.add(devices.getIMEI());
+                    listDevices.add(device);
+                }
+            }
+        }
+        return listDevices;
+    }
+
+    @Override
+    public Client getClientForLoggedInUser(String email) {
+        return clientRepository.findByAccount_Username(email);
+    }
+
+    @Override
+    public Long countClientDevices(Client client) {
+        int size = clientRepository.findDevicesByClient(client).size();
+        return (long) size;
+    }
+
+
 }

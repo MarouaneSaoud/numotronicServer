@@ -37,6 +37,7 @@ public class CompanyServiceImpl implements CompanyService {
     private final AccountService accountService;
     private final ClientRepository  clientRepository;
     private final DeviceGroupRepository deviceGroupRepository;
+    private final GetDevice getDevice ;
 
     @Override
     public List<Company> company_list() {
@@ -45,7 +46,6 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company addCompany(CompanyToSave companyToSave) {
         try {
-
             Company company=new Company();
             AppUser appUser = accountService.saveUser(companyToSave.getEmail(), companyToSave.getName(), companyToSave.getPassword(), companyToSave.getPassword());
             if (appUser==null) throw new BusinessException("User Not Created");
@@ -92,7 +92,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<DeviceToSend> findDevicesByCompany(Company company) {
-        GetDevice getDevice = new GetDeviceFromApi();
+
         List<DevicesFromAPI> devicesFromAPI = getDevice.AllDevices(); // add time out
         Set<String> activeImies = new HashSet<>();
         LocalDateTime currentDateTime = LocalDateTime.now();

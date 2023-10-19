@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.numo.dao.entity.Client;
 import org.numo.dao.entity.Device;
 import org.numo.dto.client.ClientToSave;
+import org.numo.dto.device.DeviceToSend;
 import org.numo.service.ClientService;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,5 +48,22 @@ public class ClientController {
     public List<Device> findDevicesById(@PathVariable String id){
         return clientService.findDevicesByClientId(id);
     }
+    @GetMapping("/findDevicesByEmail/{email}")
+    public List<DeviceToSend> findDevicesByClient(@PathVariable String email){
+        Client client=clientService.getClientForLoggedInUser(email);
+        return clientService.findDevicesByClient(client);
+    }
+    @GetMapping("/getClientForLoggedInUser/{email}")
+    public Client getClientForLoggedInUser(@PathVariable String email){
+         Client client=clientService.getClientForLoggedInUser(email);
+         return client ;
+    }
+    @GetMapping("/CountClientDevices/{email}")
+    public Long countClientDevices (@PathVariable String email){
+        Client client=clientService.getClientForLoggedInUser(email);
+        Long count = clientService.countClientDevices(client);
+        return count ;
+    }
+
 
 }

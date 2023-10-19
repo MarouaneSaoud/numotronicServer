@@ -2,16 +2,19 @@ package org.numo.functions.impl;
 
 import org.numo.dto.device.DevicesFromAPI;
 import org.numo.functions.GetDevice;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+@Component
+@Primary
 public class GetDeviceFromApi implements GetDevice {
     @Override
     public List<DevicesFromAPI> AllDevices(){
