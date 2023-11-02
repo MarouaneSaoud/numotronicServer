@@ -1,20 +1,13 @@
 package org.numo.api;
-
-
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
-
 import org.numo.dao.entity.AppRole;
 import org.numo.dao.entity.AppUser;
 import org.numo.dto.user.RoleUserForm;
 import org.numo.dto.user.UserForm;
 import org.numo.error.BusinessException;
 import org.numo.service.AccountService;
-
 import org.springframework.web.bind.annotation.*;
-
-
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +27,6 @@ public class AuthController extends AbstractController {
         accountService.saveRole(new AppRole(null, "SUPER_ADMIN"));
         accountService.saveRole(new AppRole(null, "ADMIN"));
         accountService.saveRole(new AppRole(null, "MANAGER"));
-        accountService.saveRole(new AppRole(null, "CLIENT"));
         accountService.addRoleToUser("rabie@numotronic.com", "SUPER_ADMIN");
         accountService.addRoleToUser("manager@numotronic.com", "MANAGER");
     }*/

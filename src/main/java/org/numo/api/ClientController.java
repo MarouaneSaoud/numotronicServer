@@ -58,12 +58,11 @@ public class ClientController {
          Client client=clientService.getClientForLoggedInUser(email);
          return client ;
     }
-    @GetMapping("/CountClientDevices/{email}")
+    @GetMapping("/countClientDevices/{email}")
     public Long countClientDevices (@PathVariable String email){
         Client client=clientService.getClientForLoggedInUser(email);
         Long count = clientService.countClientDevices(client);
         return count ;
     }
-
 
 }
