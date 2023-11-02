@@ -1,6 +1,5 @@
 package org.numo.service;
 
-import org.numo.dao.CompanyStatistic;
 import org.numo.dto.DeviceStatistic;
 import org.numo.dto.StatisticsResponse;
 

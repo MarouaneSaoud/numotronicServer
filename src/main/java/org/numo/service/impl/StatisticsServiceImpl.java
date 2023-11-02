@@ -1,8 +1,6 @@
 package org.numo.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.numo.dao.CompanyStatistic;
-import org.numo.dao.entity.Company;
 import org.numo.dao.repository.CompanyRepository;
 import org.numo.dao.repository.DeviceRepository;
 import org.numo.dto.DeviceStatistic;
@@ -13,7 +11,6 @@ import org.numo.service.DeviceService;
 import org.numo.service.StatisticsService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.ZoneId;

@@ -29,6 +29,18 @@ public interface CompanyRepository extends JpaRepository<Company,String> {
             "GROUP BY c.id " +
             "ORDER BY COUNT(d.id) DESC")
     List<Company> findTop5CompaniesByDeviceCount();
+    @Query("SELECT c.clients " +
+            "FROM Company c " +
+            "WHERE c.id = :companyId " +
+            "AND c.id IN (" +
+            "SELECT cc.id " +
+            "FROM Company cc " +
+            "JOIN cc.clients client " +
+            "GROUP BY cc.id " +
+            "ORDER BY SIZE(client.devices) DESC" +
+            ")")
+    List<Client> findTop5ClientsWithMostDevices(@Param("companyId") String companyId);
+
 
 
 

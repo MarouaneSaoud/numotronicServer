@@ -28,5 +28,6 @@ public interface CompanyService {
     CompanyDeviceAllocatePercentage percentageOfAffectedDevices(Company company);
     CompanyStatistic companyStatistic(Company company);
     List<Company> getTop5CompaniesByDeviceCount();
+    List<Client> findTop5ClientsWithMostDevices(Company company);
 
  }

@@ -56,7 +56,7 @@ public class CompanyServiceImpl implements CompanyService {
                 company.setName(companyToSave.getName());
                 company.setCin_rc(companyToSave.getCin_rc());
                 company.setAltName(companyToSave.getAltName());
-                company.setTel(company.getTel());
+                company.setTel(companyToSave.getTel());
 
                 company.setAddress(companyToSave.getAddress());
                 company.setPostalCode(companyToSave.getPostalCode());
@@ -260,6 +260,15 @@ public class CompanyServiceImpl implements CompanyService {
         List<Company> top5CompaniesByDeviceCount = companyRepository.findTop5CompaniesByDeviceCount();
         return top5CompaniesByDeviceCount.subList(0, Math.min(top5CompaniesByDeviceCount.size(), 5));
     }
+    @Override
+    public List<Client> findTop5ClientsWithMostDevices(Company company) {
+        List<Client> topClients = companyRepository.findTop5ClientsWithMostDevices(company.getId());
+
+        if (topClients.size() > 5) {
+            return topClients.subList(0, 5);
+        } else {
+            return topClients;
+        }    }
 
 
 }

@@ -127,4 +127,9 @@ public class CompanyController {
     public List<Client> findClientsByIdCompany(@PathVariable String id){
         return companyService.findClientsByIdCompany(id);
     }
+    @GetMapping("/findTop5Clients/{email}")
+    public List<Client> findTop5ClientsWithMostDevices(@PathVariable String email){
+        Company company = companyService.getCompanyForLoggedInUser(email);
+        return companyService.findTop5ClientsWithMostDevices(company);
+    }
 }

@@ -1,4 +1,4 @@
-package org.numo.dao;
+package org.numo.dto;
 
 
 import lombok.AllArgsConstructor;
