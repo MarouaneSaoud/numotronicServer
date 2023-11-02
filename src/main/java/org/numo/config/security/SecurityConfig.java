@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers( "/login","/users/loadUsername/**").permitAll()
                 .antMatchers( "/webjars/**","/swagger-resources/**","/swagger-ui.html/**", "/swagger-ui/**", "/v2/api-docs/**","/csrf/**").permitAll()
-                .antMatchers("/users/**","/reference/**","/device/**","/company/**","/client/**","/deviceGroup/**","/statistics/**").hasAnyAuthority("SUPER_ADMIN","ADMIN","MANAGER")
+                .antMatchers("/users/**","/reference/**","/device/**","/company/**","/client/**","/deviceGroup/**","/statistics/**").hasAnyAuthority("SUPER_ADMIN","ADMIN","MANAGER","CLIENT")
                 .anyRequest().authenticated();
         http.addFilter(new JWTAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new JWTAuthorizationFiler(), UsernamePasswordAuthenticationFilter.class);
