@@ -8,6 +8,8 @@ import org.numo.dto.user.UserForm;
 import org.numo.error.BusinessException;
 import org.numo.service.AccountService;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,16 +22,19 @@ import java.util.Optional;
 public class AuthController extends AbstractController {
     private final AccountService accountService;
 
-  /* @PostConstruct
+  @PostConstruct
     void init() {
-        accountService.saveUser("rabie@numotronic.com", "rabie", "numoAdmin@12", "numoAdmin@12");
-        accountService.saveUser("manager@numotronic.com", "manager", "numoAdmin@12", "numoAdmin@12");
-        accountService.saveRole(new AppRole(null, "SUPER_ADMIN"));
-        accountService.saveRole(new AppRole(null, "ADMIN"));
-        accountService.saveRole(new AppRole(null, "MANAGER"));
-        accountService.addRoleToUser("rabie@numotronic.com", "SUPER_ADMIN");
-        accountService.addRoleToUser("manager@numotronic.com", "MANAGER");
-    }*/
+//        accountService.saveUser("ali@numotronic.com", "rabie", "admin@12", "admin@12");
+//        accountService.saveUser("khalid@numotronic.com", "manager", "admin@12", "admin@12");
+//        accountService.saveRole(new AppRole(null, "SUPER_ADMIN"));
+//        accountService.saveRole(new AppRole(null, "ADMIN"));
+//        accountService.saveRole(new AppRole(null, "MANAGER"));
+        accountService.saveRole(new AppRole(null, "CLIENT"));
+        accountService.addRoleToUser("marouanesaoud84@gmail.com", "CLIENT");
+//        accountService.addRoleToUser("ali@numotronic.com", "SUPER_ADMIN");
+//        accountService.addRoleToUser("khalid@numotronic.com", "MANAGER");
+//
+}
 
 
     @GetMapping("/")
